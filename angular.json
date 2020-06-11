@@ -122,8 +122,13 @@
               "devServerTarget": "doctoresNotas:serve:production"
             }
           }
+        },
+        "deploy": {
+          "builder": "@angular/fire:deploy",
+          "options": {}
         }
       }
-    }},
+    }
+  },
   "defaultProject": "doctoresNotas"
 }

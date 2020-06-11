@@ -1,0 +1,19 @@
+{
+  "hosting": [
+    {
+      "target": "doctoresNotas",
+      "public": "dist/doctoresNotas",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    }
+  ]
+}

@@ -23,7 +23,7 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-12">
-                                            <h4 class="card-title">Consultas guardadas hoy</h4>
+                                           <!--  <h4 class="card-title">Consultas guardadas hoy</h4> -->
                                             <div class="table-responsive">
                                                 <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list" data-page-size="10">
                                                     <thead>
@@ -34,6 +34,7 @@
                                                             <th>Diagnostico</th>
                                                             <th>Receta</th>
                                                             <th>Estado</th>
+                                                            <th>Receta</th>
                                                             <th>Acciones</th>
                                                         </tr>
                                                     </thead>
@@ -45,7 +46,20 @@
                                                             <td>{{c.diagnostico}}</td>
                                                             <td>{{c.receta}}</td>
                                                             <td>{{c.diagnostico}}</td>
-                                                            <td (click)="openModalDetail(c)"> <button type="button" class="btn btn-sm btn-icon btn-pure btn-outline delete-row-btn" data-toggle="tooltip" data-original-title="Delete"><i class="ti-close" aria-hidden="true"></i></button></td>
+                                                            <td> <button class="btn btn-info" (click)="openReceta(c)">ver receta</button></td>
+                                                            <td><div class="btn-group">
+                                                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                    Acciones
+                                                                </button>
+                                                                <div class="dropdown-menu animated bounce">
+                                                                    <a class="dropdown-item" href="#">Enviar receta</a>
+                                                                    <a class="dropdown-item" href="#">Seguimiento</a>
+                                                                    <a class="dropdown-item" href="#">Revisar Historia</a>
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <a class="dropdown-item" href="#">Crear anotación</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

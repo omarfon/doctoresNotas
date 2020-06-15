@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConsultasService } from 'src/app/services/consultas.service';
+import {MatDialog} from '@angular/material/dialog';
+import { RecipeComponent } from 'src/app/modals/recipe/recipe.component';
 
 
 @Component({
@@ -11,7 +13,8 @@ export class CitaComponent implements OnInit {
 
   public consultas;
 
-  constructor(public consultaSrv: ConsultasService) { }
+  constructor(public consultaSrv: ConsultasService,
+              public modal: MatDialog) { }
 
   ngOnInit() {
     this.getAllConsultas();
@@ -30,6 +33,7 @@ export class CitaComponent implements OnInit {
             hourDate: d.payload.doc.data()['hourDate'],
             datetime: d.payload.doc.data()['datetime'],
             receta: d.payload.doc.data()['datosConsulta']['prescription'],
+            medicines: d.payload.doc.data()['datosConsulta']['medicines'],
         }
       })
       console.log('this.consultas:',this.consultas);
@@ -40,6 +44,15 @@ export class CitaComponent implements OnInit {
     console.log(c);
     alert(JSON.stringify(c));
     console.log('abrir un modal con datos');
+  }
+
+  openReceta(c){
+    this.modal.open(RecipeComponent, {
+      data: {
+        c: c
+      } 
+    });
+    console.log('revisar receta', c);
   }
 
 }

@@ -3,3 +3,67 @@
     width:100%;
     height: 40vh;
 }
+.remote{
+    width: 100%;
+    height: 300px;
+}
+.local{
+  width:100%;
+  height: 150px;
+}
+
+
+.container-buttons{
+    z-index:50;
+    bottom:1.5rem;
+    width:100%;
+  }
+.datosDoctor{
+  p{
+    color:#fff;
+    margin-left:20px;
+  }
+  .NombreDoctor{
+    margin-top:-10px;
+    margin-bottom:20px;
+    font-size:1em;
+    font-weight: 500;
+    color: rgba($color: #fff, $alpha: 1);
+  }
+  .horaInicio{
+    color:rgba($color: #fff, $alpha: 0.9);
+    margin-top:-15px;
+  }
+  .fondo{
+    background: rgba($color: #000000, $alpha: 0.7);
+    width: 25%;
+    padding: 5px;
+    border-radius: 3px;
+  }
+}
+      .center{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          text-align: center;
+      }
+.error-message{
+  color:red;
+  font-size:.8em;
+  text-align: left;
+}
+
+label{
+  font-size:.8em!important;
+}
+.form-group{
+  margin-bottom:5px!important;
+}
+.videoSize{
+  height: 350px!important;
+}
+.citasprevias{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

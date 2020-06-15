@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     this.router.navigate(['/citaspendientes']);
   }
 
-  goToDetails(){
+  goToCitas(){
     this.router.navigate(['/citas']);
   }
 

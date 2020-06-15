@@ -12,6 +12,9 @@ export const environment = {
     storageBucket: "doctorestele.appspot.com",
     messagingSenderId: "172467271749",
     appId: "1:172467271749:web:3b7e5deb0109aba21acb2c"
+  },
+  agora:{
+    appId:'b75a830a11a84a0bbb812fc81aa60860'
   }
 };
 

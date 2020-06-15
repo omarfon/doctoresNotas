@@ -8,15 +8,23 @@ import { map } from 'rxjs/operators';
 })
 export class DatesService {
   private SERVER = API_ENDPOINT;
-  private url = `${this.SERVER}ebooking/agenda-medico?professionalid=109`;
+  private url = `${this.SERVER}ebooking/agenda-medico?professionalid=`;
+  public dataDoctor: any;
+  public dataId: any; 
+  constructor(public http: HttpClient) {
+    this.dataDoctor = localStorage.getItem('dataDoctor');
+    console.log(this.dataDoctor);
+   }
 
-  constructor(public http: HttpClient) { }
-
+   
   getDates(){
+    this.dataId = JSON.parse(this.dataDoctor)
+    const idDoctor = this.dataId.professionalId;
+    console.log(idDoctor);
     const authorization = localStorage.getItem('authorization');
     let headers = new HttpHeaders({"Authorization": authorization});
 
-    return this.http.get(this.url, {headers}).pipe(
+    return this.http.get(this.url + idDoctor, {headers}).pipe(
               map((resp:any)=>{
                 return resp
               })/* .catch(e =>{
@@ -24,4 +32,5 @@ export class DatesService {
               }) */
           )
   }
+
 }

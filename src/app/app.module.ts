@@ -22,6 +22,19 @@ import { environment } from 'src/environments/environment';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFirestoreModule} from '@angular/fire/firestore';
 
+//Agora
+import {NgxAgoraModule} from 'ngx-agora';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+//Angular material
+import {MatDialogModule} from '@angular/material/dialog';
+import { DatepastComponent } from './modals/datepast/datepast.component';
+import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { RecipeComponent } from './modals/recipe/recipe.component';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,7 +46,9 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
     CitaspendientesComponent,
     CitaComponent,
     LoginComponent,
-    DetallecitaComponent
+    DetallecitaComponent,
+    DatepastComponent,
+    RecipeComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +57,17 @@ import {AngularFirestoreModule} from '@angular/fire/firestore';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxAgoraModule.forRoot({AppID: environment.agora.appId}),
+    BrowserAnimationsModule,
+    MatDialogModule,
+    MatBottomSheetModule,
+    MatStepperModule,
+    MatFormFieldModule
+  ],
+  entryComponents: [
+    DatepastComponent,
+    RecipeComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

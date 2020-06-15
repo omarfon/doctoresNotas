@@ -1,23 +1,39 @@
-   <app-header></app-header>
-   <app-sidebar></app-sidebar>
-   <div class="page-wrapper" style="height:100vh!important;">
+<div id="main-wrapper">
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="page-wrapper" style="height:100vh!important;">
+  <!--  <app-sidebar></app-sidebar> -->
       <div class="container-fluid">
         <div class="row page-titles">
-            <div class="col-md-7 align-self-center">
-                <h3 class="text-themecolor">Paciente: {{dataPaciente.patientName}} {{dataPaciente.patientLastname}} {{dataPaciente.patientLastname2}}</h3>
-                <p><span> Sexo:</span> Femenino  <span>Edad:</span> 38  <span>DNI:</span> 44539552</p>   
-                <!-- <div class="card">
-                    <div class="card-body">
-                    </div>
-                </div> -->
+            <div class="col-lg-2 citasprevias" (click)="openModalCitas()">
+                <button class="btn btn-rounded btn-success">
+                Ver Historia clínica
+                </button>
             </div>
-            <div class="col-md-5 align-self-center">
+            <div class="col-md-10 col-lg-10 align-self-left">
+                <h6 *ngIf="dataPaciente" class="text-themecolor">Paciente: {{dataPaciente.patientName}} {{dataPaciente.patientLastname}} {{dataPaciente.patientLastname2}}</h6>
+                <div class="row" *ngIf="datosPaciente">
+                    <div class="col-lg-2">
+                       <p>Sexo:<b>{{datosPaciente.gender.name}}</b></p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p>Edad: {{datosPaciente.fecha_nac | date:'yyyy'}}</p>
+                    </div>
+                    <div class="col-lg-3">
+                       <p>Telefono: {{datosPaciente.telefono1}}</p>
+                    </div>
+                    <div class="col-lg-5">
+                        <p>Email: {{datosPaciente.email}}</p>
+                     </div>
+                </div>
+            </div>
+<!--             <div class="col-md-5 align-self-center">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a [routerLink]="['/home']">Home</a></li>
                     <li class="breadcrumb-item"><a [routerLink]="['/citaspendientes']">Citas Pendientes</a></li>
                     <li class="breadcrumb-item">Consulta</li>
                 </ol>
-            </div>
+            </div> -->
             <div class="">
                 <button class="right-side-toggle waves-effect waves-light btn-inverse btn btn-circle btn-sm pull-right m-l-10"><i class="ti-settings text-white"></i></button>
             </div>
@@ -25,186 +41,261 @@
         <div class="row">
             <div class="col-lg-5">
               <div class="card">
-                <div class="card-body">
-                  <h4 class="card-title">Video</h4>
-                  <div class="row">
-                    <div class="col-lg-12">
-                      <div class="video"></div>
-                    </div>
-              </div>     
-                  </div>
-                </div>
-                <div class="card">
-                  <div class="card-body">
-                    <div class="row">
-                      <div class="col-lg-12">
-                        <h4 class="card-title m-b-20">Datos Pre-consulta</h4>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                  <label class="control-label m-b-20">Enfermedades pre-existentes:</label> 
-                            </div>
-                            <div class="col-lg-12">
-                                  <label class="control-label m-b-20">Medicinas pre-existentes:</label> 
-                            </div>
-                            <div class="col-lg-12">
-                              <label class="control-label m-b-20">Operaciones previas:</label> 
-                          
-                            </div>
-                            <div class="col-lg-12">
-                              <label class="control-label m-b-20">Comentarios adicionales:</label> 
-                             
+                  <div class="container">
+                      <div class="row justify-content-center">
+                        <div class="col-lg-12 videoSize">
+                            
+                            <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
+                            <!-- <p class="horaInicio fondo">{{time}}</p> -->
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 center">
+                                    <i class="mdi mdi-video" (click)="mute()"></i>
+                                </div>
+                                <div class="col-lg-4 col-md-4 center">
+                                    <button class="btn btn-circle btn-danger" (click)="initiVideo()">
+                                    <i class="mdi mdi-phone"></i>
+                                    </button>
+                                </div>
+                                <div class="col-lg-4 col-md-4 center"  (click)="leave()">
+                                    <i class="mdi mdi-video-off"></i>
+                                </div>
                             </div>
                         </div>
                       </div>
-    <!--                   <div class="col-lg-12">
-                        <h4 class="card-title">Antecedentes</h4>
-                      </div> -->
-                    </div>
                   </div>
+                
+             </div>
+                 <div class="card">
+                      <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div [id]="localCallId" class="local"></div>
+                            </div>    
+                          <div class="col-lg-7">
+                            <h4 class="card-title m-b-20">Datos Pre-consulta</h4>
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <label class="control-label m-b-20">Enfermedades pre-existentes:</label>
+                              </div>
+                              <div class="col-lg-12">
+                                <label class="control-label m-b-20">Medicinas pre-existentes:</label>
+                              </div>
+                              <div class="col-lg-12">
+                                <label class="control-label m-b-20">Operaciones previas:</label>
+
+                              </div>
+                              <div class="col-lg-12">
+                                <label class="control-label m-b-20">Comentarios adicionales:</label>
+
+                              </div>
+                            </div>
+                          </div>
+                          <!--                   <div class="col-lg-12">
+                                        <h4 class="card-title">Antecedentes</h4>
+                                    </div> -->
+                        </div>
+                      </div>
                 </div>
-              
-            </div>
+
+             </div>
+               
               <div class="col-lg-7">
-                  <div class="card">
+                  <div class="card" id="recetascroll">
                       <div class="card-body">
                               <ul class="nav nav-tabs profile-tab" role="tablist">
-                                  <!-- <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#home" role="tab">Datos paciente</a> </li> -->
                                   <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">MEAP</a> </li>
                                   <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#settings" role="tab">Tratamiento y seguimiento</a> </li>
+                                  <li class="nav-item"> <a class="nav-link" data-toggle="tab" href="#receta" role="tab">Receta</a> </li>
                               </ul>
-                              <form [formGroup]="consultaForm" (ngSubmit)="onSaveForm()">
+                              <form [formGroup]="consultaForm" (ngSubmit)="onSaveForm($event)">
                                   <div class="tab-content">
-                                    <!--   <div class="tab-pane active" id="home" role="tabpanel">
-                                          <h4 class="card-title m-t-20 m-b-20">Datos paciente</h4>
-                                          <div class="row">
-                                              <div class="col-lg-6">
-                                                  <div class="form-group">
-                                           
-                                                      <input type="text" id="name" class="form-control" formControlName="name"  placeholder="nombres">
-                                                     
-                                                  </div> 
-                                              </div>
-                                              <div class="col-lg-6">
-                                                  <div class="form-group">
-                                                     
-                                                      <input type="text" id="lastname" class="form-control" formControlName="lastname"  placeholder="Apellido Paterno">
-                                                   
-                                                  </div> 
-                                              </div>
-                                              <div class="col-lg-6">
-                                                  <div class="form-group">
-                                                   
-                                                      <input type="text" id="mlastname" class="form-control" formControlName="mlastname"  placeholder="Apellido Materno">
-                                                     
-                                                  </div> 
-                                              </div>
-                                              <div class="col-lg-6">
-                                                  <div class="form-group">
-                                                 
-                                                      <input type="number" id="dni" class="form-control" formControlName="dni"  placeholder="DNI">
-                                                    
-                                                  </div> 
-                                              </div>
-                                              <div class="col-lg-6">
-                                                  <div class="form-group">
-                                                      
-                                                      <input type="text" id="birthdate" class="form-control" formControlName="birthdate"  placeholder="Fecha de nacimiento">
-                                                     
-                                                  </div> 
-                                              </div>
-                                              <div class="col-lg-6">
-                                                  <div class="form-group">
-                                                
-                                                      <input type="text" id="sex" class="form-control" formControlName="sex"  placeholder="Apellido Paterno">
-                                                     
-                                                  </div> 
-                                              </div>
-                                          </div>
-                                      </div> -->
                                       <div class="tab-pane active" id="profile" role="tabpanel">
-                                          <h4 class="card-title m-t-20 m-b-20">Motivo/ EAP</h4>
+                                          <h4 class="card-title m-t-20 m-b-20">Completar MEAP</h4>
                                           <div class="row">
                                               <div class="col-lg-12">
                                                   <div class="form-group">
-                                              <!--         <label class="control-label">Nombre</label> -->
                                                       <textarea type="text" id="motive" class="form-control" formControlName="motive"  placeholder="Motivo consulta">
                                                           </textarea>
-                                                      <!-- <small class="form-control-feedback"> This is inline help </small> -->
+                                                     <ng-container *ngIf="!motive.valid && motive.touched">
+                                                         <p *ngIf="motive.errors.required" class="error-message">
+                                                             Este campo es requerido
+                                                         </p>
+                                                         <p *ngIf="motive.errors.minlength" class="error-message">
+                                                             Ingresa como mínimo 5 letras
+                                                         </p>
+                                                     </ng-container>
                                                   </div> 
+                                              </div>
+                                              <div class="col-lg-12">
+                                                <div class="form-group">
+                                                     <textarea type="text" id="exploration" class="form-control" formControlName="exploration"  placeholder="Exploración">
+                                                     </textarea>
+                                                     <ng-container *ngIf="!exploration.valid && exploration.touched">
+                                                        <p *ngIf="exploration.errors.required" class="error-message">
+                                                            Este campo es requerido
+                                                        </p>
+                                                        <p *ngIf="exploration.errors.minlength" class="error-message">
+                                                            Ingresa como mínimo 5 letras
+                                                        </p>
+                                                     </ng-container>
+                                                </div> 
+                                              </div>
+                                              <div class="col-lg-12">
+                                                <div class="form-group">
+                                                    <textarea type="text" id="anamnesis" class="form-control" formControlName="anamnesis"  placeholder="Anamnesis">
+                                                    </textarea>
+                                                    <ng-container *ngIf="!anamnesis.valid && anamnesis.touched">
+                                                        <p *ngIf="anamnesis.errors.required" class="error-message">
+                                                            Este campo es requerido
+                                                        </p>
+                                                        <p *ngIf="anamnesis.errors.minlength" class="error-message">
+                                                            Ingresa como mínimo 5 letras
+                                                        </p>
+                                                    </ng-container>
+                                                </div> 
                                               </div>
                                                       <div class="col-lg-12">
                                                           <div class="form-group">
-                                                      <!--         <label class="control-label">Nombre</label> -->
-                                                              <textarea type="text" id="exploration" class="form-control" formControlName="exploration"  placeholder="Exploración">
-                                                                  </textarea>
-                                                              <!-- <small class="form-control-feedback"> This is inline help </small> -->
-                                                          </div> 
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                          <div class="form-group">
-                                                      <!--         <label class="control-label">Nombre</label> -->
-                                                              <textarea type="text" id="anamnesis" class="form-control" formControlName="anamnesis"  placeholder="Anamnesis">
-                                                                  </textarea>
-                                                              <!-- <small class="form-control-feedback"> This is inline help </small> -->
-                                                          </div> 
-                                                      </div>
-                                                      <div class="col-lg-12">
-                                                          <div class="form-group">
-                                                      <!--         <label class="control-label">Nombre</label> -->
                                                               <textarea type="text" id="pronostico" class="form-control" formControlName="pronostico"  placeholder="Pronostico">
-                                                                  </textarea>
-                                                              <!-- <small class="form-control-feedback"> This is inline help </small> -->
+                                                              </textarea>
+                                                              <ng-container *ngIf="!pronostico.valid && pronostico.touched">
+                                                                <p *ngIf="pronostico.errors.required" class="error-message">
+                                                                    Este campo es requerido
+                                                                </p>
+                                                                <p *ngIf="pronostico.errors.minlength" class="error-message">
+                                                                    Ingresa como mínimo 5 letras
+                                                                </p>
+                                                            </ng-container>
                                                           </div> 
                                                       </div>
-                                                      <div class="col-lg-12">
-                                                        <div class="form-group">
-                                                    <!--         <label class="control-label">Nombre</label> -->
-                                                            <textarea type="text" id="diagnostic" class="form-control" formControlName="diagnostic"  placeholder="Diagnostico">
-                                                                </textarea>
-                                                            <!-- <small class="form-control-feedback"> This is inline help </small> -->
-                                                        </div> 
-                                                    </div>
+                                                        <div class="col-lg-12" >
+                                                            <textarea type="text" id="diagnostic" class="form-control" formControlName="diagnostic"  placeholder="Diagnostico"></textarea>
+                                                            <ng-container *ngIf="!diagnostic.valid && diagnostic.touched">
+                                                                <p *ngIf="diagnostic.errors.required" class="error-message">
+                                                                    Este campo es requerido
+                                                                </p>
+                                                                <p *ngIf="diagnostic.errors.minlength" class="error-message">
+                                                                    Ingresa como mínimo 5 letras
+                                                                </p>
+                                                            </ng-container>
+                                                        </div>
                                           </div>
                                       </div>
                                       <div class="tab-pane" id="settings" role="tabpanel">
                                           <h4 class="card-title m-t-20 m-b-20">Tratamiento</h4>
                                          
-                                          <div class="col-lg-12">
+                                          <div class="col-lg-12" >
                                               <div class="form-group">
-                                          <!--         <label class="control-label">Nombre</label> -->
                                                   <textarea type="text" id="evolution" class="form-control" formControlName="evolution"  placeholder="Evolución">
-                                                      </textarea>
-                                                  <!-- <small class="form-control-feedback"> This is inline help </small> -->
+                                                  </textarea>
+                                                  <ng-container *ngIf="!evolution.valid && evolution.touched">
+                                                    <p *ngIf="evolution.errors.required" class="error-message">
+                                                        Este campo es requerido
+                                                    </p>
+                                                    <p *ngIf="evolution.errors.minlength" class="error-message">
+                                                        Ingresa como mínimo 5 letras
+                                                    </p>
+                                                </ng-container>
                                               </div> 
                                           </div>
-                                          <div class="col-lg-12">
-                                            <div class="form-group">
-                                        <!--         <label class="control-label">Nombre</label> -->
-                                                <textarea type="text" id="prescription" class="form-control" formControlName="prescription"  placeholder="Prescripción">
-                                                    </textarea>
-                                                <!-- <small class="form-control-feedback"> This is inline help </small> -->
-                                            </div> 
-                                        </div>
                                           <div class="col-lg-12">
                                               <div class="form-group">
-                                          <!--         <label class="control-label">Nombre</label> -->
                                                   <textarea type="text" id="more" class="form-control" formControlName="more"  placeholder="Adiconionales">
-                                                      </textarea>
-                                                  <!-- <small class="form-control-feedback"> This is inline help </small> -->
+                                                </textarea>
+                                                <ng-container *ngIf="!more.valid && more.touched">
+                                                    <p *ngIf="more.errors.required" class="error-message">
+                                                        Este campo es requerido
+                                                    </p>
+                                                    <p *ngIf="more.errors.minlength" class="error-message">
+                                                        Ingresa como mínimo 5 letras
+                                                    </p>
+                                                </ng-container>
                                               </div> 
                                           </div>
-                                         
-
                                       </div>
+                                        <div class="tab-pane" id="receta" role="tabpanel" >
+                                          <h4 class="card-title m-t-20 m-b-20">Agregar medicina</h4>
+                                          <div class="form-group m-b-20" formArrayName="medicines" >
+                                              <div class="row" *ngFor="let m of medicines.controls; let i=index"
+                                                                [formGroupName]="i">
+                                                  <div class="col-lg-12">
+                                                    <button class="btn btn-circle m-b-10">
+                                                        {{i + 1}}
+                                                    </button>
+                                                    </div>
+                                                  <div class="col-lg-4">
+                                                      <div class="form-group">
+                                                          <!-- <label for="">Principio activo</label> -->
+                                                          <input type="text" id="activeprinciple" class="form-control" formControlName="activeprinciple" placeholder="Medicamento" >
+                                                      </div> 
+                                                  </div>
+                                                  <div class="col-lg-4">
+                                                      <div class="form-group">
+                                                        <!-- <label for="">Marca comercial</label> -->
+                                                          <input type="text" id="marc" class="form-control" formControlName="marc" placeholder="Marca" >
+                                                      </div> 
+                                                  </div>
+                                                  <div class="col-lg-4">
+                                                      <div class="form-group">
+                                                        <!-- <label for="">Concentración</label> -->
+                                                          <input type="text" id="concentration" class="form-control" formControlName="concentration" placeholder="Concentración">
+                                                         
+                                                      </div> 
+                                                  </div>
+                                                  <div class="col-lg-3">
+                                                      <div class="form-group">
+                                                        <!-- <label for="">presentación</label> -->
+                                                          <input type="text" id="presentation" class="form-control" formControlName="presentation" placeholder="Presentación">
+                                                      </div> 
+                                                  </div>
+                                                  <div class="col-lg-3">
+                                                      <div class="form-group">
+                                                        <!-- <label for="">Dosis</label> -->
+                                                          <input type="number" id="dosis" class="form-control" formControlName="dosis"placeholder="Duración" >
+                                                         
+                                                      </div> 
+                                                  </div>
+                                                  <div class="col-lg-3">
+                                                      <div class="form-group">
+                                                        <!-- <label for="">Frecuencia</label> -->
+                                                          <input type="number" id="frecuencia" class="form-control" formControlName="frecuencia" placeholder="Frecuencia">
+                                                      </div> 
+                                                  </div>
+                                                  <div class="col-lg-3">
+                                                    <div class="form-group">
+                                                        <!-- <label for="">Duración</label> -->
+                                                        <input type="number" id="duration" class="form-control" formControlName="duration" placeholder="Total">
+                                                       
+                                                    </div> 
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <!-- <label for="">Duración</label> -->
+                                                        <input type="text" id="anotations" class="form-control" formControlName="anotations" placeholder="Anotaciones">
+                                                       
+                                                    </div> 
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-8"></div>
+                                                <div class="col-lg-4">
+                                                    <button class="btn btn-block btn-outline-success"><p class="form-action" outline (click)="addNewMedicine()">Agregar medicina</p></button>
+                                                </div>
+                                            </div>
+                                          </div>
+                                      </div> 
                                   </div>  
+                                  
                                   <div class="row">
-                                    <div class="col-lg-6">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <button type="submit" class="btn btn-block btn-info block">Guardar</button>
-                                    </div>
-              
-                                </div>
+                                      <div class="col-lg-6">
+                                      </div>
+                                      <div class="col-lg-6">
+                                          <button type="submit" class="btn btn-block btn-info block">Guardar</button>
+                                      </div>
+                
+                                  </div>
                                 </form>
                                 
                             </div>
@@ -213,11 +304,11 @@
                   
                   
               </div>
-              <div class="alert alert-success">This is an example top alert. You can edit what u wish. </div>
+              <!-- <pre>{{consultaForm.value | json}}</pre> -->
+              <!-- <div class="alert alert-success">This is an example top alert. You can edit what u wish. </div> -->
           </div>
       </div>
     </div>
-
-       
+</div>
   
   

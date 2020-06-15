@@ -10,9 +10,9 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  private firstName : string;
-  private password : string;
-  private dataLoginSuccess;
+  public firstName : string;
+  public password : string;
+  public dataLoginSuccess;
 
   constructor(public auth: AuthService,
               public router: Router) { }
@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
       this.dataLoginSuccess = data;
       if(this.dataLoginSuccess){
         localStorage.setItem('dataDoctor', JSON.stringify(this.dataLoginSuccess));
+        localStorage.setItem('authorization', this.dataLoginSuccess.authorization);
         this.router.navigate(['/home']);
       }
     },err =>{

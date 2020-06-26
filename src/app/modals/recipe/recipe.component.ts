@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { CitaComponent } from 'src/app/paginas/cita/cita.component';
+
 
 
 @Component({
@@ -10,22 +11,27 @@ import { CitaComponent } from 'src/app/paginas/cita/cita.component';
   styleUrls: ['./recipe.component.scss']
 })
 export class RecipeComponent implements OnInit {
- 
 
+  @ViewChild('htmlData', { static: false }) htmlData: ElementRef;
   public receta;
   public doctorData;
 
+
   constructor(public route: Router,
-              public activateRouter: ActivatedRoute,
-              @Inject(MAT_DIALOG_DATA) public data: any) { }
+    public activateRouter: ActivatedRoute,
+    @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit() {
-   console.log(this.data);
-   this.receta = this.data.c.medicines;
-   
-   let doctordata = localStorage.getItem('dataDoctor');
-   this.doctorData = JSON.parse(doctordata);
-   console.log(this.doctorData);
+    console.log(this.data);
+    this.receta = this.data.c.medicines;
+
+    let doctordata = localStorage.getItem('dataDoctor');
+    this.doctorData = JSON.parse(doctordata);
+    console.log(this.doctorData);
   }
+
+
+
+
 
 }

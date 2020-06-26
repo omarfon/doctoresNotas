@@ -1,42 +1,42 @@
-<div class="row">
-    <div class="col-lg-12">
-        <p class="blue">RECETA MÉDICA</p>
+<div class="row" id="htmlData" #htmlData>
+  <div class="col-lg-12">
+    <p class="blue">RECETA MÉDICA</p>
+    <div class="row">
+      <div class="col-lg-8">
         <div class="row">
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-lg-12 blue">{{doctorData.displayName}}</div>
-                    <div class="col-lg-12 blue">Especialidad => No llega aún</div>
-                    <div class="col-lg-12 blue">CMP: {{doctorData.codigoColegiado}}</div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <img src="../../../assets/images/logoaviva.svg" alt="">
-            </div>
+          <div class="col-lg-12 blue">{{doctorData.displayName}}</div>
+          <div class="col-lg-12 blue">Especialidad => No llega aún</div>
+          <div class="col-lg-12 blue">CMP: {{doctorData.codigoColegiado}}</div>
         </div>
-        <hr>
+      </div>
+      <div class="col-lg-4">
+        <img src="../../../assets/images/logoaviva.svg" alt="">
+      </div>
     </div>
-    <div class="col-lg-12">
-        <div class="row">
-            <div class="col-lg-4">
-                <h4>Medicina</h4>
-            </div>
-            <div class="col-lg-4">
-                <h4>Dosis</h4>
-            </div>
-            <div class="col-lg-4">
-                <h4>Duración</h4>
-            </div>
-        </div>
-        <div class="row" *ngFor="let m of receta">
-            <div class="col">
-                <p>{{m.activeprinciple}}</p>
-            </div>
-            <div class="col">
-                <p>{{m.dosis}}</p>
-            </div>
-            <div class="col">
-                <p>{{m.duration}}</p>
-            </div>
-        </div>
+    <hr>
+  </div>
+  <div class="col-lg-12">
+    <div class="row">
+      <div class="col-lg-4">
+        <h4>Medicina</h4>
+      </div>
+      <div class="col-lg-4">
+        <h4>Dosis</h4>
+      </div>
+      <div class="col-lg-4">
+        <h4>Duración</h4>
+      </div>
     </div>
+    <div class="row" *ngFor="let m of receta">
+      <div class="col">
+        <p>{{m.activeprinciple}}</p>
+      </div>
+      <div class="col">
+        <p>{{m.dosis}}</p>
+      </div>
+      <div class="col">
+        <p>{{m.duration}}</p>
+      </div>
+    </div>
+  </div>
 </div>

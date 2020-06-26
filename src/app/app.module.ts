@@ -19,20 +19,25 @@ import { DetallecitaComponent } from './paginas/detallecita/detallecita.componen
 import { environment } from 'src/environments/environment';
 
 //Firebase
-import {AngularFireModule} from '@angular/fire';
-import {AngularFirestoreModule} from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireStorageModule } from '@angular/fire/storage';
 
 //Agora
-import {NgxAgoraModule} from 'ngx-agora';
+import { NgxAgoraModule } from 'ngx-agora';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 //Angular material
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DatepastComponent } from './modals/datepast/datepast.component';
-import {MatBottomSheetModule} from '@angular/material/bottom-sheet';
-import {MatStepperModule} from '@angular/material/stepper';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { RecipeComponent } from './modals/recipe/recipe.component';
+import { ErrorComponent } from './alerts/error/error.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { CiesearchComponent } from './components/ciesearch/ciesearch.component';
+
 
 
 @NgModule({
@@ -48,7 +53,9 @@ import { RecipeComponent } from './modals/recipe/recipe.component';
     LoginComponent,
     DetallecitaComponent,
     DatepastComponent,
-    RecipeComponent
+    RecipeComponent,
+    ErrorComponent,
+    CiesearchComponent
   ],
   imports: [
     BrowserModule,
@@ -57,17 +64,20 @@ import { RecipeComponent } from './modals/recipe/recipe.component';
     HttpClientModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
+    AngularFireStorageModule,
     ReactiveFormsModule,
-    NgxAgoraModule.forRoot({AppID: environment.agora.appId}),
+    NgxAgoraModule.forRoot({ AppID: environment.agora.appId }),
     BrowserAnimationsModule,
     MatDialogModule,
     MatBottomSheetModule,
     MatStepperModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatSidenavModule
   ],
   entryComponents: [
     DatepastComponent,
-    RecipeComponent
+    RecipeComponent,
+    ErrorComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

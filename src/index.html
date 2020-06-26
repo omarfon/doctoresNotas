@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>DoctoresNotas</title>
@@ -18,6 +19,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
   <!-- Dashboard 1 Page CSS -->
   <link href="assets/css/pages/dashboard2.css" rel="stylesheet">
+  <link href="assets/css/pages/floating-label.css" rel="stylesheet">
   <!-- You can change the theme colors from here -->
   <link href="assets/plugins/multiselect/css/multi-select.css" rel="stylesheet" type="text/css" />
   <link href="assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" type="text/css" />
@@ -28,16 +30,17 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="assets/plugins/horizontal-timeline/css/horizontal-timeline.css" rel="stylesheet">
-  <link href="assets/css/pages/timeline-vertical-horizontal.css" rel="stylesheet"> 
+  <link href="assets/css/pages/timeline-vertical-horizontal.css" rel="stylesheet">
 </head>
+
 <body class="fix-header card-no-border fix-sidebar">
 
-    <div class="preloader">
-        <div class="loader">
-            <div class="loader__figure"></div>
-            <p class="loader__label">Aviva</p>
-        </div>
+  <div class="preloader">
+    <div class="loader">
+      <div class="loader__figure"></div>
+      <p class="loader__label">Aviva</p>
     </div>
+  </div>
   <app-root></app-root>
   <script src="assets/plugins/jquery/jquery.min.js"></script>
   <!-- Bootstrap popper Core JavaScript -->
@@ -47,16 +50,18 @@
   <script src="assets/js/perfect-scrollbar.jquery.min.js"></script>
   <!--Wave Effects -->
   <script src="assets/js/waves.js"></script>
+  <!-- ===============================================
   <!--Menu sidebar -->
   <script src="assets/js/sidebarmenu.js"></script>
   <!--Custom JavaScript -->
   <script src="assets/js/custom.min.js"></script>
-  
+
   <script src="assets/plugins/chartist-js/dist/chartist.min.js"></script>
   <script src="assets/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js"></script>
   <!--c3 JavaScript -->
   <script src="assets/plugins/d3/d3.min.js"></script>
   <script src="assets/plugins/c3-master/c3.min.js"></script>
+  <script src="assets/js/jasny-bootstrap.js"></script>
   <!-- Chart JS -->
   <script src="assets/js/dashboard2.js"></script>
   <script src="assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
@@ -68,66 +73,70 @@
   <script src="assets/plugins/switchery/dist/switchery.min.js"></script>
   <script src="assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
   <script src="assets/plugins/horizontal-timeline/js/horizontal-timeline.js"></script>
-  
+
   <script>
-    $(document).ready(function() {
-        // Basic
-        $('.dropify').dropify();
+    $(document).ready(function () {
+      // Basic
+      $('.dropify').dropify();
 
-        // Translated
-        $('.dropify-fr').dropify({
-            messages: {
-                default: 'Glissez-déposez un fichier ici ou cliquez',
-                replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
-                remove: 'Supprimer',
-                error: 'Désolé, le fichier trop volumineux'
-            }
-        });
+      // Translated
+      $('.dropify-fr').dropify({
+        messages: {
+          default: 'Glissez-déposez un fichier ici ou cliquez',
+          replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
+          remove: 'Supprimer',
+          error: 'Désolé, le fichier trop volumineux'
+        }
+      });
 
-        // Used events
-        var drEvent = $('#input-file-events').dropify();
+      // Used events
+      var drEvent = $('#input-file-events').dropify();
 
-        drEvent.on('dropify.beforeClear', function(event, element) {
-            return confirm("Realmente quieres eliminarla ? \"" + element.file.name + "\" ?");
-        });
+      drEvent.on('dropify.beforeClear', function (event, element) {
+        return confirm("Realmente quieres eliminarla ? \"" + element.file.name + "\" ?");
+      });
 
-        drEvent.on('dropify.afterClear', function(event, element) {
-            alert('File Borrado');
-        });
+      drEvent.on('dropify.afterClear', function (event, element) {
+        alert('File Borrado');
+      });
 
-        drEvent.on('dropify.errors', function(event, element) {
-            console.log('Has Errors');
-        });
+      drEvent.on('dropify.errors', function (event, element) {
+        console.log('Has Errors');
+      });
 
-        var drDestroy = $('#input-file-to-destroy').dropify();
-        drDestroy = drDestroy.data('dropify')
-        $('#toggleDropify').on('click', function(e) {
-            e.preventDefault();
-            if (drDestroy.isDropified()) {
-                drDestroy.destroy();
-            } else {
-                drDestroy.init();
-            }
-        })
+      var drDestroy = $('#input-file-to-destroy').dropify();
+      drDestroy = drDestroy.data('dropify')
+      $('#toggleDropify').on('click', function (e) {
+        e.preventDefault();
+        if (drDestroy.isDropified()) {
+          drDestroy.destroy();
+        } else {
+          drDestroy.init();
+        }
+      })
     });
-    </script>
-     <script type="text/javascript">
-      $(function() {
-          $(".preloader").fadeOut();
-      });
-      $(function() {
-          $('[data-toggle="tooltip"]').tooltip()
-      });
-      // ============================================================== 
-      // Login and Recover Password 
-      // ============================================================== 
-      $('#to-recover').on("click", function() {
-          $("#loginform").slideUp();
-          $("#recoverform").fadeIn();
-      });
+
   </script>
-     <script type="text/javascript">
-        $('#recetascroll').perfectScrollbar();
-        </script>
+  <script type="text/javascript">
+    $(function () {
+      $(".preloader").fadeOut();
+    });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip()
+    });
+    // ============================================================== 
+    // Login and Recover Password 
+    // ============================================================== 
+    $('#to-recover').on("click", function () {
+      $("#loginform").slideUp();
+      $("#recoverform").fadeIn();
+    });
+
+  </script>
+  <script type="text/javascript">
+    $('#recetascroll').perfectScrollbar();
+
+  </script>
 </body>
+
 </html>

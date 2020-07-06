@@ -1,9 +1,15 @@
-.video{
-    background: #000;
-    width:100%;
-    height: 40vh;
+.video {
+  background: #000;
+  width: 100%;
+  height: 40vh;
 }
-.NombrePaciente{
-    color:#035aa6;
-    font-size:1.3em;
+
+.NombrePaciente {
+  color: #035aa6;
+  font-size: 1.3em;
+  text-align: left;
+}
+
+.left {
+  text-align: left;
 }

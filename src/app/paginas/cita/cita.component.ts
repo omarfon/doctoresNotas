@@ -39,7 +39,7 @@ export class CitaComponent implements OnInit {
           diagnostico: d.payload.doc.data()['datosConsulta']['diagnostic'],
           hourDate: d.payload.doc.data()['hourDate'],
           datetime: d.payload.doc.data()['datetime'],
-          receta: d.payload.doc.data()['datosConsulta']['prescription'],
+          receta: d.payload.doc.data()['recipe'],
           medicines: d.payload.doc.data()['datosConsulta']['medicines'],
         }
       })

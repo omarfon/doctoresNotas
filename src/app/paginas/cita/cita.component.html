@@ -4,7 +4,7 @@
   <div class="container-fluid">
     <div class="row page-titles">
       <div class="col-md-5 align-self-center">
-        <h3 class="text-themecolor">Citas Guardadas</h3>
+        <h3 class="text-themecolor">Citas Completadas</h3>
       </div>
       <div class="col-md-7 align-self-center">
         <ol class="breadcrumb">
@@ -19,51 +19,32 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-12">
+      <div class="col-lg-12 col-md-12">
         <div class="card">
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-12">
-                <!--  <h4 class="card-title">Consultas guardadas hoy</h4> -->
+              <div class="col-lg-12 col-md-12">
                 <div class="table-responsive">
                   <table id="demo-foo-addrow" class="table m-t-30 table-hover contact-list" data-page-size="10">
                     <thead>
                       <tr>
+                        <th>Fecha</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
                         <th>Hora</th>
                         <th>Diagnostico</th>
-                        <th>Receta</th>
-                        <th>Estado</th>
                         <th>ver receta</th>
-                        <!--   <th>Acciones</th> -->
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let c of consultas">
+                        <td>{{c.datetime | date:"dd MMMM"}}</td>
                         <td>{{c.nombre}}</td>
                         <td>{{c.apellidopUsuario}}</td>
                         <td>{{c.datetime | date:"shortTime"}}</td>
                         <td>{{c.diagnostico}}</td>
-                        <td>{{c.receta}}</td>
-                        <td>{{c.diagnostico}}</td>
                         <td> <button class="btn btn-info bt-outline" (click)="openReceta(c)">ver receta</button>
                         </td>
-                        <!--                         <td>
-                          <div class="btn-group">
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"
-                              aria-haspopup="true" aria-expanded="false">
-                              Acciones
-                            </button>
-                            <div class="dropdown-menu animated bounce">
-                              <a class="dropdown-item" href="#">Enviar receta</a>
-                              <a class="dropdown-item" href="#">Seguimiento</a>
-                              <a class="dropdown-item" href="#">Revisar Historia</a>
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="#">Crear anotación</a>
-                            </div>
-                          </div>
-                        </td> -->
                       </tr>
                     </tbody>
                   </table>
@@ -77,48 +58,4 @@
       </div>
     </div>
   </div>
-
-
-  <!--   <mat-drawer id="drawer" #drawer class="example-sidenav" mode="side" position="end">
-    <div class="col-lg-12" *ngIf="doctorData" id="htmlData" #htmlData>
-      <p class="blue">RECETA MÉDICA</p>
-      <div class="row">
-        <div class="col-lg-8">
-          <div class="row">
-            <div class="col-lg-12 blue">{{doctorData.displayName}}</div>
-            <div class="col-lg-12 blue">Especialidad => No llega aún</div>
-            <div class="col-lg-12 blue">CMP: {{doctorData.codigoColegiado}}</div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <img src="../../../assets/images/logoaviva.svg" alt="">
-        </div>
-      </div>
-      <hr>
-    </div>
-    <div class="col-lg-12">
-      <div class="row">
-        <div class="col-lg-4">
-          <h4>Medicina</h4>
-        </div>
-        <div class="col-lg-4">
-          <h4>Dosis</h4>
-        </div>
-        <div class="col-lg-4">
-          <h4>Duración</h4>
-        </div>
-      </div>
-      <div class="row" *ngFor="let m of receta">
-        <div class="col">
-          <p>{{m.activeprinciple}}</p>
-        </div>
-        <div class="col">
-          <p>{{m.dosis}}</p>
-        </div>
-        <div class="col">
-          <p>{{m.duration}}</p>
-        </div>
-      </div>
-    </div>
-  </mat-drawer> -->
 </div>

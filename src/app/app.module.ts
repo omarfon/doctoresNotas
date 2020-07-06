@@ -37,6 +37,13 @@ import { RecipeComponent } from './modals/recipe/recipe.component';
 import { ErrorComponent } from './alerts/error/error.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CiesearchComponent } from './components/ciesearch/ciesearch.component';
+import { DiagnosticsComponent } from './modals/diagnostics/diagnostics.component';
+import { RecetaComponent } from './paginas/receta/receta.component';
+
+import { LOCALE_ID } from '@angular/core';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+registerLocaleData(localeEs, 'es');
 
 
 
@@ -55,7 +62,9 @@ import { CiesearchComponent } from './components/ciesearch/ciesearch.component';
     DatepastComponent,
     RecipeComponent,
     ErrorComponent,
-    CiesearchComponent
+    CiesearchComponent,
+    DiagnosticsComponent,
+    RecetaComponent
   ],
   imports: [
     BrowserModule,
@@ -77,9 +86,10 @@ import { CiesearchComponent } from './components/ciesearch/ciesearch.component';
   entryComponents: [
     DatepastComponent,
     RecipeComponent,
-    ErrorComponent
+    ErrorComponent,
+    DiagnosticsComponent
   ],
-  providers: [],
+  providers: [{ provide: LOCALE_ID, useValue: 'es' },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

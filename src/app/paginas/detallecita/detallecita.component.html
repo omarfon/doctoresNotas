@@ -1,7 +1,7 @@
 <div id="main-wrapper">
   <app-header></app-header>
   <app-sidebar></app-sidebar>
-  <div class="page-wrapper" style="height:100vh!important;">
+  <div class="page-wrapper">
     <!--  <app-sidebar></app-sidebar> -->
     <div class="container-fluid">
       <div class="row page-titles">
@@ -10,8 +10,8 @@
             Ver Historia clínica
           </button>
         </div>
-        <div class="col-md-8 col-lg-8 align-self-left">
-          <h6 *ngIf="dataPaciente" class="text-themecolor">Paciente: {{dataPaciente.patientName}}
+        <div class="col-md-8 col-lg-8 align-self-left" *ngIf="dataPaciente">
+          <h6 class="text-themecolor">Paciente: {{dataPaciente.patientName}}
             {{dataPaciente.patientLastname}} {{dataPaciente.patientLastname2}}</h6>
           <div class="row" *ngIf="datosPaciente">
             <div class="col-lg-2">
@@ -56,7 +56,7 @@
                   <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
                   <!-- <p class="horaInicio fondo">{{time}}</p> -->
                 </div>
-                <div class="col-lg-12">
+                <!--                 <div class="col-lg-12">
                   <div class="row">
                     <div class="col-lg-4 col-md-4 center">
                       <i class="mdi mdi-video" (click)="mute()"></i>
@@ -66,16 +66,11 @@
                         <i class="mdi mdi-phone"></i>
                       </button>
                     </div>
-                    <!--   <div class="col-lg-3 col-md-3 center">
-                                    <button class="btn btn-circle btn-danger" >
-                                    <i class="mdi mdi-phone"></i>
-                                    </button>
-                                </div> -->
                     <div class="col-lg-4 col-md-4 center" (click)="leave()">
                       <i class="mdi mdi-video-off"></i>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
             </div>
 
@@ -116,7 +111,7 @@
 
         <div class="col-lg-7">
           <div class="card" id="recetascroll">
-            <div class="card-body">
+            <div class="card-body m-t-0">
               <ul class="nav nav-tabs profile-tab" role="tablist">
                 <li class="nav-item"> <a class="nav-link active" data-toggle="tab" href="#profile" role="tab">MEAP</a>
                 </li>
@@ -136,7 +131,7 @@
                                                           </textarea>
                           <ng-container *ngIf="!motive.valid && motive.touched">
                             <p *ngIf="motive.errors.required" class="error-message">
-                              Este campo es requerido
+                              Es necesario llenar este campo
                             </p>
                             <p *ngIf="motive.errors.minlength" class="error-message">
                               Ingresa como mínimo 5 letras
@@ -151,7 +146,7 @@
                                                      </textarea>
                           <ng-container *ngIf="!exploration.valid && exploration.touched">
                             <p *ngIf="exploration.errors.required" class="error-message">
-                              Este campo es requerido
+                              Es necesario llenar este campo
                             </p>
                             <p *ngIf="exploration.errors.minlength" class="error-message">
                               Ingresa como mínimo 5 letras
@@ -166,7 +161,7 @@
                                                     </textarea>
                           <ng-container *ngIf="!anamnesis.valid && anamnesis.touched">
                             <p *ngIf="anamnesis.errors.required" class="error-message">
-                              Este campo es requerido
+                              Es necesario llenar este campo
                             </p>
                             <p *ngIf="anamnesis.errors.minlength" class="error-message">
                               Ingresa como mínimo 5 letras
@@ -181,7 +176,7 @@
                                                               </textarea>
                           <ng-container *ngIf="!pronostico.valid && pronostico.touched">
                             <p *ngIf="pronostico.errors.required" class="error-message">
-                              Este campo es requerido
+                              Es necesario llenar este campo
                             </p>
                             <p *ngIf="pronostico.errors.minlength" class="error-message">
                               Ingresa como mínimo 5 letras
@@ -189,29 +184,37 @@
                           </ng-container>
                         </div>
                       </div>
-                      <div class="col-lg-12">
-                        <textarea type="text" id="diagnostic" class="form-control" formControlName="diagnostic"
-                          placeholder="Diagnostico"></textarea>
+                      <div class="col-lg-12" *ngIf="!diagnostico">
+                        <textarea type="text" class="form-control" formControlName="diagnostic"
+                          placeholder="Diagnostico" (click)="openModalDiagnostic()">
+                         </textarea>
                         <ng-container *ngIf="!diagnostic.valid && diagnostic.touched">
                           <p *ngIf="diagnostic.errors.required" class="error-message">
-                            Este campo es requerido
+                            Es necesario llenar este campo
                           </p>
                           <p *ngIf="diagnostic.errors.minlength" class="error-message">
                             Ingresa como mínimo 5 letras
                           </p>
                         </ng-container>
-
-
                       </div>
-                      <!--  <app-ciesearch (search)="handleSearch($event)"></app-ciesearch>
-                      <div *ngFor="let p of diagnostics">
-                        <p>{{p.nombre}}</p>
-                      </div> -->
+                      <div class="col-lg-12" *ngIf="diagnostico">
+                        <div class="row">
+                          <div class="col-lg-10">
+                            <textarea type="text" disabled class="form-control" [(ngModel)]="diagnostico"
+                              formControlName="diagnostic" placeholder="Diagnostico">
+                            </textarea>
+                          </div>
+                          <div class="col-lg-1">
+                            <button class="btn btn-info" (click)="cancelar()">
+                              <i class="mdi mdi-close"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class=" tab-pane" id="settings" role="tabpanel">
                     <!--  <h4 class="card-title m-t-20 m-b-20">Tratamiento</h4> -->
-
                     <div class="col-lg-12">
                       <div class="form-group m-t-10">
                         <textarea type="text" id="evolution" class="form-control" formControlName="evolution"
@@ -219,7 +222,7 @@
                                                   </textarea>
                         <ng-container *ngIf="!evolution.valid && evolution.touched">
                           <p *ngIf="evolution.errors.required" class="error-message">
-                            Este campo es requerido
+                            Es necesario llenar este campo
                           </p>
                           <p *ngIf="evolution.errors.minlength" class="error-message">
                             Ingresa como mínimo 5 letras
@@ -234,7 +237,7 @@
                                                 </textarea>
                         <ng-container *ngIf="!more.valid && more.touched">
                           <p *ngIf="more.errors.required" class="error-message">
-                            Este campo es requerido
+                            Es necesario llenar este campo
                           </p>
                           <p *ngIf="more.errors.minlength" class="error-message">
                             Ingresa como mínimo 5 letras
@@ -268,74 +271,120 @@
                     </div>
                   </div>
                   <div class="tab-pane " id="receta" role="tabpanel">
-                    <!-- <h4 class="card-title m-t-20 m-b-20">Agregar medicina</h4> -->
-                    <div class="form-group m-b-20 " formArrayName="medicines">
-                      <div class="row overflo" *ngFor="let m of medicines.controls; let i=index" [formGroupName]="i">
-                        <div class="col-lg-12">
-                          <button class="btn btn-circle m-b-10">
-                            {{i + 1}}
-                          </button>
-                        </div>
-                        <div class="col-lg-4">
+                    <div class="form-group m-b-20 ">
+                      <div class="row m-t-20">
+                        <!-- <div class="col-lg-6" *ngIf="visible == false">
                           <div class="form-group">
-                            <!-- <label for="">Principio activo</label> -->
+
                             <input type="text" id="activeprinciple" class="form-control"
-                              formControlName="activeprinciple" placeholder="Medicamento">
+                              (keyup)="obtenerRecipes($event)" formControlName="activeprinciple"
+                              placeholder="Medicamento">
                           </div>
                         </div>
-                        <div class="col-lg-4">
+                        <div class="col-lg-6" *ngIf="visible == false">
                           <div class="form-group">
-                            <!-- <label for="">Marca comercial</label> -->
+                            
                             <input type="text" id="marc" class="form-control" formControlName="marc"
                               placeholder="Marca">
                           </div>
-                        </div>
-                        <div class="col-lg-4">
+                        </div> -->
+                        <!--        <div class="col-lg-4" *ngIf="!farmacoSelect">
                           <div class="form-group">
-                            <!-- <label for="">Concentración</label> -->
+                
                             <input type="text" id="concentration" class="form-control" formControlName="concentration"
                               placeholder="Concentración">
 
                           </div>
-                        </div>
-                        <div class="col-lg-3">
+                        </div> -->
+                        <div class="col-lg-6">
                           <div class="form-group">
-                            <!-- <label for="">presentación</label> -->
+                            <label class="cabecera" for="">Principio activo</label>
+                            <input type="text" id="activeprinciple" class="form-control"
+                              (keyup)="obtenerRecipes($event)" formControlName="activeprinciple" [(ngModel)]="farmaco">
+                          </div>
+                        </div>
+                        <div class="col-lg-6">
+                          <div class="form-group">
+                            <label for="" class="cabecera">Marca comercial</label>
+                            <input type="text" id="marc" class="form-control" [(ngModel)]="farmacoMarca"
+                              formControlName="marc">
+                          </div>
+                        </div>
+                        <!--    <div class="col-lg-4" *ngIf="farmacoSelect">
+                          <div class="form-group">
+                          
+                            <input type="text" id="concentration" class="form-control"
+                              [(ngModel)]="farmacoConcentration" formControlName="concentration"
+                              placeholder="Concentración">
+
+                          </div>
+                        </div> -->
+                        <div class="col-lg-12" *ngIf="farmacos">
+                          <div class="row " id="recipes">
+                            <div class="col-lg-12" *ngFor="let f of farmacos">
+                              <p class="medicinas btn" (click)="selectFarmaco(f)">
+                                <span>{{f.principiosActivos[0].nombre}}</span> -
+                                {{f.marcaComercial}}</p>
+                            </div>
+                          </div>
+                        </div>
+                        <!--  <div class="col-lg-3">
+                          <div class="form-group">
                             <input type="text" id="presentation" class="form-control" formControlName="presentation"
                               placeholder="Presentación">
                           </div>
-                        </div>
+                        </div> -->
                         <div class="col-lg-3">
-                          <div class="form-group">
-                            <!-- <label for="">Dosis</label> -->
-                            <input type="number" id="dosis" class="form-control" formControlName="dosis"
-                              placeholder="Duración">
 
+                          <div class="form-group">
+                            <label for="" class="cabecera">Duración</label>
+                            <div class="input-group bootstrap-touchspin">
+                              <input type="number" id="duration" class="form-control" formControlName="duration"
+                                [(ngModel)]="duration">
+                              <span class="input-group-addon bootstrap-touchspin-postfix">días</span>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div class="col-lg-4">
+                          <div class="form-group">
+                            <label for="" class="cabecera">Frecuencia</label>
+                            <div class="input-group bootstrap-touchspin">
+                              <span class="input-group-addon bootstrap-touchspin-prefix">cada</span>
+                              <input type="number" id="frecuencia" class="form-control" formControlName="frecuencia"
+                                [(ngModel)]="frecuencia">
+                              <span class="input-group-addon bootstrap-touchspin-postfix">horas</span>
+                            </div>
                           </div>
                         </div>
                         <div class="col-lg-3">
                           <div class="form-group">
-                            <!-- <label for="">Frecuencia</label> -->
-                            <input type="number" id="frecuencia" class="form-control" formControlName="frecuencia"
-                              placeholder="Frecuencia">
+                            <label for="" class="cabecera">Dosis</label>
+                            <input type="text" id="dosis" class="form-control" formControlName="dosis"
+                              [(ngModel)]="dosis">
                           </div>
                         </div>
-                        <div class="col-lg-3">
+                        <div class="col-lg-2">
                           <div class="form-group">
-                            <!-- <label for="">Duración</label> -->
-                            <input type="number" id="duration" class="form-control" formControlName="duration"
-                              placeholder="Total">
+                            <label for="" class="cabecera">Total</label>
+                            <input type="text" id="total" class="form-control" formControlName="total"
+                              [(ngModel)]="total">
 
                           </div>
                         </div>
                         <div class="col-lg-12">
                           <div class="form-group">
-                            <!-- <label for="">Duración</label> -->
+                            <label for="" class="cabecera">Indicaciones</label>
                             <input type="text" id="anotations" class="form-control" formControlName="anotations"
-                              placeholder="Anotaciones">
-
+                              [(ngModel)]="anotations">
                           </div>
                         </div>
+                        <!--    <div class="row">
+                          <div class="col-lg-4" *ngFor="let farmaco of farmacos">
+                            <h6>{{farmaco.nombreGenerico}}</h6>
+                          </div>
+                        </div> -->
                       </div>
                       <div class="row">
                         <!--  <div class="col-lg-8">
@@ -343,9 +392,36 @@
                             pdf</button>
                         </div> -->
                         <div class="col-lg-4">
-                          <button class="btn btn-block btn-outline-success">
-                            <p class="form-action" outline (click)="addNewMedicine()">Agregar medicina</p>
+                          <button class="btn btn-block btn-outline-success" (click)="addNewMedicine()">
+
+                            <i class="fa fa-plus"></i>
+
+                            Agregar medicina
                           </button>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-3 medicina" *ngFor="let m of medicinas; let i=index">
+                          <div class="row">
+                            <!--    <div class="col-lg-12">
+                              {{i+1}}
+                            </div> -->
+                            <div class="col-lg-12 m-t-10 m-b-20">
+                              <p class="principleactive">{{m.activeprinciple | slice:0:25}}...</p>
+                            </div>
+                            <div class="col-lg-12">
+                              <p class="textopequeño"> administrar <span>{{m.dosis}} </span></p>
+                            </div>
+                            <div class="col-lg-12">
+                              <p class="textopequeño"> cada {{m.frecuencia}} horas</p>
+                            </div>
+                            <div class="col-lg-12">
+                              <p class="textopequeño"> por {{m.duration}} días</p>
+                            </div>
+                            <!-- <div class="col-lg-4">
+                              {{m.total}}
+                            </div> -->
+                          </div>
                         </div>
                       </div>
                     </div>

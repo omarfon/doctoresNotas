@@ -10,30 +10,49 @@ export class ConsultasService {
 
   private consultas: AngularFirestoreCollection<any>
 
-  constructor(public afs: AngularFirestore) { 
+  constructor(public afs: AngularFirestore) {
+
     this.consultas = afs.collection<any>('consultas');
   }
 
-  sendConsulta(newConsulta:any){
-    console.log('en el servicio:', newConsulta);
-     return this.consultas.add(newConsulta);
+  saveInitAppointment(appointmentId, uid, uidDoctor) {
+    this.afs.collection('consultas').doc(appointmentId).set({
+      appointmentId: appointmentId,
+      uid: uid,
+      uidDoctor: uidDoctor
+    }).catch(err => {
+      console.log('error de escritura inicial', err)
+    })
   }
 
-  getAllConsultas(){
+  sendConsulta(newConsulta: any) {
+    console.log('en el servicio:', newConsulta);
+    return this.consultas.add(newConsulta);
+  }
+
+  getAllConsultas() {
     return this.afs.collection('consultas').snapshotChanges();
   }
 
-  getDatesPerPatient(idUser){
+  getDatesPerPatient(idUser) {
     console.log('idUser en servicio:', idUser);
-      return this.afs.collection('consultas', ref => ref.where('idUsuaio', '==', idUser)).valueChanges();
+    return this.afs.collection('consultas', ref => ref.where('idUsuaio', '==', idUser)).valueChanges();
   }
 
-  getConsultasPerDoctor(){
+  getConsultasPerDoctor() {
     const doctorId = localStorage.getItem('dataDoctor');
     let doctor = JSON.parse(doctorId);
     const idDoctor = doctor.professionalId;
     console.log('idUser en servicio:', idDoctor);
-      return this.afs.collection('consultas', ref => ref.where('professionalId', '==', idDoctor)).snapshotChanges();
+    return this.afs.collection('consultas', ref => ref.where('professionalId', '==', idDoctor))
+      .snapshotChanges();
+  }
+
+  getConsultasPerDay() {
+    const doctorId = localStorage.getItem('dataDoctor');
+    let doctor = JSON.parse(doctorId);
+    const idDoctor = doctor.prodessionalId;
+    return this.afs.collection('consultas', ref => ref.where('professionalId', '==', idDoctor)).snapshotChanges();
   }
 
   /* getDatesPerPatient(){

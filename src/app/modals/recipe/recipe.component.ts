@@ -15,6 +15,7 @@ export class RecipeComponent implements OnInit {
   @ViewChild('htmlData', { static: false }) htmlData: ElementRef;
   public receta;
   public doctorData;
+  public dataPaciente;
 
 
   constructor(public route: Router,
@@ -23,7 +24,8 @@ export class RecipeComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data);
-    this.receta = this.data.c.medicines;
+    this.receta = this.data.c.receta;
+    this.dataPaciente = this.data.c;
 
     let doctordata = localStorage.getItem('dataDoctor');
     this.doctorData = JSON.parse(doctordata);

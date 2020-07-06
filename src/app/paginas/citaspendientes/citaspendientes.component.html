@@ -14,14 +14,39 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-lg-12 col-sm-12">
+      <div class="col-lg-6 col-sm-12">
         <h3 class="m-l-10">Citas de Hoy</h3>
         <div class="row">
-          <div class="col-lg-4 col-md-4" *ngFor="let c of citas">
-            <div class="card">
+          <div class="col-lg-11 col-md-11" *ngFor="let c of citas">
+            <div class="card btn" *ngIf="c.status == 'en hora'">
               <div class="card-body" (click)="goTodetail(c)">
                 <p class="NombrePaciente">{{c.patientName}} {{c.patientLastname}}</p>
-                <p><b>{{c.datetime | date:'shortTime'}}</b></p>
+                <p class="left"><b>{{c.datetime | date:'shortTime'}}</b></p>
+              </div>
+            </div>
+            <div class="card btn" *ngIf="c.status == 'pendiente'">
+              <div class="card-body" (click)="goTodetail(c)">
+                <p class="NombrePaciente">{{c.patientName}} {{c.patientLastname}}</p>
+                <p class="left"><b>{{c.datetime | date:'shortTime'}}</b></p>
+              </div>
+            </div>
+            <div class="card btn" *ngIf="c.status == 'pasada' ">
+              <div class="card-body " (click)="goTodetail(c)">
+                <p class="NombrePaciente">{{c.patientName}} {{c.patientLastname}}</p>
+                <p class="left"><b>{{c.datetime | date:'shortTime'}}</b></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+        <h3 class="m-l-10">Citas Realizadas</h3>
+        <div class="row">
+          <div class="col-lg-11 col-md-11" *ngFor="let c of citas">
+            <div class="card bg-warning" *ngIf="c.status == 'pasada' ">
+              <div class="card-body">
+                <p class="NombrePaciente">{{c.patientName}} {{c.patientLastname}}</p>
+                <p class="left"><b>{{c.datetime | date:'shortTime'}}</b></p>
               </div>
             </div>
           </div>

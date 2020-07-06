@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter, Input, Optional, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -9,7 +9,7 @@ import { NgxAgoraService, Stream, AgoraClient, ClientEvent, StreamEvent } from '
 import * as moment from 'moment';
 import { WebrtcService } from 'src/app/services/webrtc.service';
 import { DatapacienteService } from 'src/app/services/datapaciente.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 import { DatepastComponent } from 'src/app/modals/datepast/datepast.component';
@@ -20,6 +20,11 @@ import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { CieService } from 'src/app/services/cie.service';
+import { DiagnosticsComponent } from 'src/app/modals/diagnostics/diagnostics.component';
+import { FarmacosService } from 'src/app/services/farmacos.service';
+import { SendMailService } from 'src/app/services/send-mail.service';
+
+
 
 
 
@@ -62,6 +67,23 @@ export class DetallecitaComponent implements OnInit {
   recipepdf: any;
   recipe: any;
   diagnostics: any;
+  farmacos: any;
+  dialogValue: any;
+  diagnostico: any;
+  active: any;
+  farmacoSelect: any;
+  farmaco: string;
+  farmacoMarca: string;
+  farmacoConcentration;
+  public medicinas: any = [];
+  public duration;
+  public frecuencia;
+  public total = "";
+  public anotations = "";
+  public activeprinciple;
+  public marc;
+  public dosis;
+  visible: boolean = false;
 
   constructor(public cs: ConsultasService,
     public router: Router,
@@ -74,7 +96,11 @@ export class DetallecitaComponent implements OnInit {
     private _bottomSheet: MatBottomSheet,
     public permissionSrv: GetPermissionsService,
     public afs: AngularFireStorage,
-    public cieSrv: CieService) {
+    public cieSrv: CieService,
+    public farmaSrv: FarmacosService,
+    public sendMailSrv: SendMailService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
+    console.log('this.data:', this.data);
     this.consultaForm = this.createForm();
   }
 
@@ -86,6 +112,7 @@ export class DetallecitaComponent implements OnInit {
   get sex() { return this.consultaForm.get('sex'); }
 
   ngOnInit() {
+
     /* this.initiVideo(); */
     /*  this.route.queryParams.subscribe(params =>{
        this.paciente = params['data'];
@@ -107,6 +134,7 @@ export class DetallecitaComponent implements OnInit {
 
 
 
+
   handleSearch(value: string) {
     let codigo = "";
     let nombre = value;
@@ -114,6 +142,24 @@ export class DetallecitaComponent implements OnInit {
       this.diagnostics = data;
       console.log(this.diagnostics)
     })
+  }
+
+  obtenerRecipes(event) {
+    console.log('active:', this.active);
+    let farmaco = event.target.value
+    this.farmaSrv.getFarmaco(farmaco).subscribe(data => {
+      this.farmacos = data
+      console.log(this.farmacos);
+    })
+  }
+
+  selectFarmaco(f) {
+    console.log('farmaco', f);
+    this.farmacoSelect = f;
+    this.farmaco = this.farmacoSelect.nombreGenerico;
+    this.farmacoMarca = this.farmacoSelect.marcaComercial;
+    this.farmacos = undefined;
+    this.visible = true;
   }
 
   initiVideo() {
@@ -132,23 +178,18 @@ export class DetallecitaComponent implements OnInit {
       exploration: new FormControl('', [Validators.required, Validators.minLength(5)]),
       anamnesis: new FormControl('', [Validators.required, Validators.minLength(5)]),
       pronostico: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      diagnostic: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      diagnostic: new FormControl(this.diagnostico, [Validators.required, Validators.minLength(5)]),
       evolution: new FormControl('', [Validators.required, Validators.minLength(5)]),
       more: new FormControl('', [Validators.minLength(5)]),
       examaux: new FormControl('',),
       proced: new FormControl('',),
-      medicines: new FormArray([
-        new FormGroup({
-          activeprinciple: new FormControl('', [Validators.required]),
-          marc: new FormControl('', [Validators.required]),
-          concentration: new FormControl('', [Validators.required]),
-          presentation: new FormControl('', [Validators.required]),
-          dosis: new FormControl('', [Validators.required]),
-          frecuencia: new FormControl('', [Validators.required]),
-          duration: new FormControl('', [Validators.required]),
-          anotations: new FormControl('', [Validators.required])
-        })
-      ])
+      activeprinciple: new FormControl(''),
+      marc: new FormControl(''),
+      duration: new FormControl(''),
+      frecuencia: new FormControl(''),
+      dosis: new FormControl(''),
+      total: new FormControl(''),
+      anotations: new FormControl('')
     })
   }
 
@@ -180,6 +221,9 @@ export class DetallecitaComponent implements OnInit {
     this.consultaForm.reset();
   }
 
+  resetReseta() {
+    this.consultaForm.value.activeprinciple.reset();
+  }
   calculoEdad() {
     const fecha = moment().format('YYYY-MM-DD');
     const fecha_nac = moment(this.datosPaciente.fecha_nac).format('YYYY-MM-DD');
@@ -242,15 +286,29 @@ export class DetallecitaComponent implements OnInit {
       provisionDescription: this.dataPaciente.provisionDescription,
       appointmentlId: this.dataPaciente.appointmentId,
       datetime: this.dataPaciente.datetime,
+      now: moment().format('YYYY-MM-DD'),
       edad: this.fechaNac,
-      datosConsulta: datos
+      datosConsulta: datos,
+      recipe: this.medicinas,
+      diagnostico: this.diagnostico
     }
     if (this.consultaForm.valid) {
       this.cs.sendConsulta(data);
       Swal.fire('Data Guardada...', 'Listo... acabas de guardar la consulta!', 'success')
       console.log('data enviada:', data);
-      this.onReset();
+      this.sendRecipe();
     }
+  }
+
+  sendRecipe() {
+    const datos = {
+      patientId: this.dataPaciente.patientId,
+      appointmentId: this.dataPaciente.appointmentId,
+      recipe: this.consultaForm.value
+    }
+    this.sendMailSrv.SendRecipe(datos).subscribe(data => {
+      console.log('correo enviado:', data);
+    })
   }
 
 
@@ -371,6 +429,7 @@ export class DetallecitaComponent implements OnInit {
   closeSession() {
     this.client.leave();
     this.localStream.close();
+    this.onReset();
     this.router.navigate(['home']);
   }
 
@@ -379,19 +438,30 @@ export class DetallecitaComponent implements OnInit {
   }
 
   addNewMedicine() {
-    this.medicines.push(
-      new FormGroup({
-        activeprinciple: new FormControl(''),
-        marc: new FormControl(''),
-        concentration: new FormControl(''),
-        presentation: new FormControl(''),
-        dosis: new FormControl(''),
-        frecuencia: new FormControl(''),
-        duration: new FormControl(''),
-        anotations: new FormControl(''),
-      })
+    this.medicinas.push(
+      {
+        activeprinciple: this.farmaco,
+        marc: this.farmacoMarca,
+        duration: this.duration,
+        frecuencia: this.frecuencia,
+        dosis: this.dosis,
+        total: this.total,
+        anotations: this.anotations,
+      }
     );
+    this.farmaco = "";
+    this.farmacoMarca = "";
+    this.farmacoSelect = "";
+    this.duration = "";
+    this.frecuencia = "";
+    this.dosis = "";
+    this.total = "";
+    this.anotations = "";
+    this.visible = false;
+    console.log('this.medicinas en el push:', this.medicinas);
+
   }
+
 
   mute() {
     console.log('mute');
@@ -463,5 +533,22 @@ export class DetallecitaComponent implements OnInit {
   getDiagnostic(diagnos) {
     console.log('diagnos', diagnos);
   }
+
+  openModalDiagnostic() {
+    const dialogRef = this.modal.open(DiagnosticsComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      /*       console.log('The dialog was closed', result); */
+      /* console.log('el resultado de data:', this.dialogValue.data); */
+      this.dialogValue = result.data;
+      this.diagnostico = this.dialogValue.data.codigo + " " + '-' + " " + this.dialogValue.data.nombre;
+    });
+  }
+
+  cancelar() {
+    this.diagnostico = undefined;
+  }
+
+
 
 }

@@ -47,7 +47,7 @@
   <script src="assets/plugins/bootstrap/js/popper.min.js"></script>
   <script src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>
   <!-- slimscrollbar scrollbar JavaScript -->
-  <script src="assets/js/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.jquery.js"></script>
   <!--Wave Effects -->
   <script src="assets/js/waves.js"></script>
   <!-- ===============================================
@@ -71,52 +71,10 @@
   <script src="assets/plugins/dropify/dist/js/dropify.min.js"></script>
   <script src="assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
   <script src="assets/plugins/switchery/dist/switchery.min.js"></script>
+  <script src="assets/plugins/sticky-kit-master/dist/sticky-kit.min.js"></script>
   <script src="assets/plugins/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js"></script>
   <script src="assets/plugins/horizontal-timeline/js/horizontal-timeline.js"></script>
 
-  <script>
-    $(document).ready(function () {
-      // Basic
-      $('.dropify').dropify();
-
-      // Translated
-      $('.dropify-fr').dropify({
-        messages: {
-          default: 'Glissez-déposez un fichier ici ou cliquez',
-          replace: 'Glissez-déposez un fichier ou cliquez pour remplacer',
-          remove: 'Supprimer',
-          error: 'Désolé, le fichier trop volumineux'
-        }
-      });
-
-      // Used events
-      var drEvent = $('#input-file-events').dropify();
-
-      drEvent.on('dropify.beforeClear', function (event, element) {
-        return confirm("Realmente quieres eliminarla ? \"" + element.file.name + "\" ?");
-      });
-
-      drEvent.on('dropify.afterClear', function (event, element) {
-        alert('File Borrado');
-      });
-
-      drEvent.on('dropify.errors', function (event, element) {
-        console.log('Has Errors');
-      });
-
-      var drDestroy = $('#input-file-to-destroy').dropify();
-      drDestroy = drDestroy.data('dropify')
-      $('#toggleDropify').on('click', function (e) {
-        e.preventDefault();
-        if (drDestroy.isDropified()) {
-          drDestroy.destroy();
-        } else {
-          drDestroy.init();
-        }
-      })
-    });
-
-  </script>
   <script type="text/javascript">
     $(function () {
       $(".preloader").fadeOut();
@@ -134,7 +92,7 @@
 
   </script>
   <script type="text/javascript">
-    $('#recetascroll').perfectScrollbar();
+    $('#recipes').perfectScrollbar();
 
   </script>
 </body>

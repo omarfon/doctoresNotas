@@ -6,6 +6,7 @@ import { LoginComponent } from './paginas/login/login.component';
 import { HomeComponent } from './paginas/home/home.component';
 import { DetallecitaComponent } from './paginas/detallecita/detallecita.component';
 import { AuthoGuard } from './guards/autho.guard';
+import { RecetaComponent } from './paginas/receta/receta.component';
 
 
 const routes: Routes = [
@@ -19,6 +20,7 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, },
   { path: 'citas', component: CitaComponent },
   { path: 'citaspendientes', component: CitaspendientesComponent },
+  { path: 'receta', component: RecetaComponent },
 
 ];
 

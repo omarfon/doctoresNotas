@@ -14,49 +14,47 @@
         </div>
         <mat-horizontal-stepper #stepper>
           <div *ngFor="let c of consultas; let i=index">
-            <mat-step label="{{c.datetime | date:'mediumDate'}}">
-              <p class="tituloDiagnostico"><span>Diagnostico:</span> {{c.datosConsulta.diagnostic}}</p>
+            <mat-step label="{{c.newConsulta.datetime | date:'mediumDate'}}" *ngIf="c.fechaFinally">
+              <p class="tituloDiagnostico"><span>Diagnostico:</span> {{c.newConsulta.datosConsulta.diagnostic}}</p>
               <div class="row">
-                <div class="col-lg-6">
-                  <h6>Consulta</h6>
+                <div class="col-lg-5">
+                  <h4>Resumen de la Consulta</h4>
                   <div class="col-lg-12">
                     <p class="titulodetalle">motivo: </p>
-                    <p>{{c.datosConsulta.motive}}</p>
+                    <p class="datosConsulta">{{c.newConsulta.datosConsulta.motive}}</p>
                   </div>
                   <div class="col-lg-12">
                     <p class="titulodetalle">exploración: </p>
-                    <p>{{c.datosConsulta.exploration}}</p>
+                    <p class="datosConsulta">{{c.newConsulta.datosConsulta.exploration}}</p>
                   </div>
                   <div class="col-lg-12">
                     <p class="titulodetalle">pronostico: </p>
-                    <p>{{c.datosConsulta.pronostico}}</p>
+                    <p class="datosConsulta">{{c.newConsulta.datosConsulta.pronostico}}</p>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <h6>Receta</h6>
+                <div class="col-lg-7">
+                  <h4>Plan de Acción</h4>
                   <div class="row">
-
-
-                    <div class="col-lg-6">
-                      <p>Medicamento</p>
+                    <div class="col-lg-7">
+                      <p class="blue">Medicamento</p>
                     </div>
                     <div class="col-lg-3">
-                      <p>Dosis</p>
+                      <p class="blue">Dosis</p>
                     </div>
-                    <div class="col-lg-3">
-                      <p>Duración</p>
+                    <div class="col-lg-2">
+                      <p class="blue">Duración</p>
                     </div>
 
-                    <div class="col-lg-12" *ngFor="let m of c.datosConsulta.medicines; let i=index">
+                    <div class="col-lg-12" *ngFor="let m of c.newConsulta.prescription; let i=index">
                       <div class="row">
-                        <div class="col-lg-6">
-                          {{m.activeprinciple}}
+                        <div class="col-lg-7 inputs">
+                          {{m.principioActivo}}
                         </div>
-                        <div class="col-lg-4">
-                          {{m.dosis}}
+                        <div class="col-lg-3 inputs">
+                          {{m.indicacionesDosis}}
                         </div>
-                        <div class="col-lg-2">
-                          {{m.duration}}
+                        <div class="col-lg-2 inputs">
+                          {{m.indicacionesTiempo}}
                         </div>
                       </div>
                     </div>
@@ -67,20 +65,6 @@
               </div>
             </mat-step>
           </div>
-          <!--  <mat-step label="Step 2" state="chat">
-                      <p>Socialize with each other.</p>
-                      <div>
-                          <button class="btn btn-success" matStepperPrevious>Back</button> 
-                     
-                      </div>
-                    </mat-step> -->
-          <!--  <mat-step label="Step 3">
-                      <p>You're welcome.</p>
-                    </mat-step>
-                    <mat-step label="Step 4">
-                        <p>You're welcome.</p>
-                      </mat-step> -->
-
         </mat-horizontal-stepper>
       </div>
     </div>

@@ -24,7 +24,7 @@
               <p>Telefono: {{datosPaciente.telefono1}}</p>
             </div>
             <div class="col-lg-5">
-              <p>Email: {{datosPaciente.email}}</p>
+              <p>Email: {{datosPaciente.emailTo}}</p>
             </div>
           </div>
         </div>
@@ -56,21 +56,6 @@
                   <div *ngFor="let callId of remoteCalls" [id]="callId" class="remote"></div>
                   <!-- <p class="horaInicio fondo">{{time}}</p> -->
                 </div>
-                <!--                 <div class="col-lg-12">
-                  <div class="row">
-                    <div class="col-lg-4 col-md-4 center">
-                      <i class="mdi mdi-video" (click)="mute()"></i>
-                    </div>
-                    <div class="col-lg-4 col-md-4 center">
-                      <button class="btn btn-circle btn-danger" (click)="closeSession()">
-                        <i class="mdi mdi-phone"></i>
-                      </button>
-                    </div>
-                    <div class="col-lg-4 col-md-4 center" (click)="leave()">
-                      <i class="mdi mdi-video-off"></i>
-                    </div>
-                  </div>
-                </div> -->
               </div>
             </div>
 
@@ -96,13 +81,9 @@
                     </div>
                     <div class="col-lg-12">
                       <label class="control-label m-b-20">Comentarios adicionales:</label>
-
                     </div>
                   </div>
                 </div>
-                <!--                   <div class="col-lg-12">
-                                        <h4 class="card-title">Antecedentes</h4>
-                                    </div> -->
               </div>
             </div>
           </div>
@@ -126,6 +107,7 @@
                     <div class="row ">
                       <div class="col-lg-12 ">
                         <div class="form-group m-t-10">
+                          <label for="" class="labelCustomize">*este campo es requerido</label>
                           <textarea type="text" id="motive" class="form-control" formControlName="motive"
                             placeholder="Motivo consulta">
                                                           </textarea>
@@ -141,6 +123,7 @@
                       </div>
                       <div class="col-lg-12">
                         <div class="form-group">
+                          <label for="" class="labelCustomize">*este campo es requerido</label>
                           <textarea type="text" id="exploration" class="form-control" formControlName="exploration"
                             placeholder="Exploración">
                                                      </textarea>
@@ -156,6 +139,7 @@
                       </div>
                       <div class="col-lg-12">
                         <div class="form-group">
+                          <label for="" class="labelCustomize">*este campo es requerido</label>
                           <textarea type="text" id="anamnesis" class="form-control" formControlName="anamnesis"
                             placeholder="Anamnesis">
                                                     </textarea>
@@ -171,6 +155,7 @@
                       </div>
                       <div class="col-lg-12">
                         <div class="form-group">
+                          <label for="" class="labelCustomize">*este campo es requerido</label>
                           <textarea type="text" id="pronostico" class="form-control" formControlName="pronostico"
                             placeholder="Pronostico">
                                                               </textarea>
@@ -185,6 +170,7 @@
                         </div>
                       </div>
                       <div class="col-lg-12" *ngIf="!diagnostico">
+                        <label for="" class="labelCustomize">*este campo es requerido</label>
                         <textarea type="text" class="form-control" formControlName="diagnostic"
                           placeholder="Diagnostico" (click)="openModalDiagnostic()">
                          </textarea>
@@ -273,29 +259,6 @@
                   <div class="tab-pane " id="receta" role="tabpanel">
                     <div class="form-group m-b-20 ">
                       <div class="row m-t-20">
-                        <!-- <div class="col-lg-6" *ngIf="visible == false">
-                          <div class="form-group">
-
-                            <input type="text" id="activeprinciple" class="form-control"
-                              (keyup)="obtenerRecipes($event)" formControlName="activeprinciple"
-                              placeholder="Medicamento">
-                          </div>
-                        </div>
-                        <div class="col-lg-6" *ngIf="visible == false">
-                          <div class="form-group">
-                            
-                            <input type="text" id="marc" class="form-control" formControlName="marc"
-                              placeholder="Marca">
-                          </div>
-                        </div> -->
-                        <!--        <div class="col-lg-4" *ngIf="!farmacoSelect">
-                          <div class="form-group">
-                
-                            <input type="text" id="concentration" class="form-control" formControlName="concentration"
-                              placeholder="Concentración">
-
-                          </div>
-                        </div> -->
                         <div class="col-lg-6">
                           <div class="form-group">
                             <label class="cabecera" for="">Principio activo</label>
@@ -407,16 +370,16 @@
                               {{i+1}}
                             </div> -->
                             <div class="col-lg-12 m-t-10 m-b-20">
-                              <p class="principleactive">{{m.activeprinciple | slice:0:25}}...</p>
+                              <p class="principleactive">{{m.principioActivo | slice:0:25}}...</p>
                             </div>
                             <div class="col-lg-12">
-                              <p class="textopequeño"> administrar <span>{{m.dosis}} </span></p>
+                              <p class="textopequeño"> administrar <span>{{m.indicacionesDosis}} </span></p>
                             </div>
                             <div class="col-lg-12">
                               <p class="textopequeño"> cada {{m.frecuencia}} horas</p>
                             </div>
                             <div class="col-lg-12">
-                              <p class="textopequeño"> por {{m.duration}} días</p>
+                              <p class="textopequeño"> por {{m.indicacionesTiempo}} días</p>
                             </div>
                             <!-- <div class="col-lg-4">
                               {{m.total}}
@@ -431,7 +394,7 @@
                 <div class="row">
                   <div class="col-lg-6">
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-lg-6 botonGuardar">
                     <button type="submit" class="btn btn-block btn-info block">Guardar</button>
                   </div>
 

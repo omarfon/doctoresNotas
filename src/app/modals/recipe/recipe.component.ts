@@ -24,8 +24,8 @@ export class RecipeComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.data);
-    this.receta = this.data.c.receta;
-    this.dataPaciente = this.data.c;
+    this.receta = this.data.c.data.prescription;
+    this.dataPaciente = this.data.c.data;
 
     let doctordata = localStorage.getItem('dataDoctor');
     this.doctorData = JSON.parse(doctordata);

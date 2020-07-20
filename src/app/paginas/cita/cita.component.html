@@ -29,25 +29,28 @@
                     <thead>
                       <tr>
                         <th>Fecha</th>
+                        <th>Hora</th>
                         <th>Nombre</th>
                         <th>Apellidos</th>
-                        <th>Hora</th>
                         <th>Diagnostico</th>
                         <th>ver receta</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let c of consultas">
-                        <td>{{c.datetime | date:"dd MMMM"}}</td>
-                        <td>{{c.nombre}}</td>
-                        <td>{{c.apellidopUsuario}}</td>
-                        <td>{{c.datetime | date:"shortTime"}}</td>
-                        <td>{{c.diagnostico}}</td>
+                        <td>{{c.data.datetime | date:"dd MMMM"}}</td>
+                        <td>{{c.data.datetime | date:"shortTime"}}</td>
+                        <td>{{c.data.nombreUsuario}}</td>
+                        <td>{{c.data.apellidopUsuario}} {{c.data.apellidomUsuario}}</td>
+                        <td>{{c.data.diagnostico}}</td>
                         <td> <button class="btn btn-info bt-outline" (click)="openReceta(c)">ver receta</button>
                         </td>
+
                       </tr>
                     </tbody>
                   </table>
+
+
                 </div>
               </div>
             </div>

@@ -4,14 +4,14 @@
     <div class="col-lg-2">
       <div class="form-group">
         <label class="control-label m-b-20 title">Código</label>
-        <input type="text" id="code" class="form-control" #codigo (keyup)="getDiagnosticCode($event)"
-          formControlName="code" placeholder="Busca por código">
+        <input type="text" id="code" class="form-control" #codigo (keyup)="getDiagnosticCode()" formControlName="code"
+          placeholder="Busca por código">
       </div>
     </div>
     <div class="col-lg-10">
       <div class="form-group">
         <label class="control-label m-b-20 title">Busca por nombre</label>
-        <input type="text" id="name" class="form-control" #nombre (keyup)="getDiagnostic($event)" formControlName="name"
+        <input type="text" id="name" class="form-control" #nombre (keyup)="getDiagnostic()" formControlName="name"
           placeholder="Nombre">
       </div>
     </div>

@@ -36,6 +36,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { RecipeComponent } from './modals/recipe/recipe.component';
 import { ErrorComponent } from './alerts/error/error.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSortModule } from '@angular/material/sort';
 import { CiesearchComponent } from './components/ciesearch/ciesearch.component';
 import { DiagnosticsComponent } from './modals/diagnostics/diagnostics.component';
 import { RecetaComponent } from './paginas/receta/receta.component';
@@ -81,7 +82,8 @@ registerLocaleData(localeEs, 'es');
     MatBottomSheetModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSortModule
   ],
   entryComponents: [
     DatepastComponent,

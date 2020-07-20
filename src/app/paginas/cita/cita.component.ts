@@ -18,6 +18,7 @@ export class CitaComponent implements OnInit {
   public consultas;
   showFiller = false;
   doctorData: any;
+  public _consultas;
 
   constructor(public consultaSrv: ConsultasService,
     public modal: MatDialog,
@@ -29,20 +30,15 @@ export class CitaComponent implements OnInit {
 
   getAllConsultasPerDoctor() {
     this.consultaSrv.getConsultasPerDoctor().subscribe(data => {
-      this.consultas = data.map(d => {
+      this._consultas = data.map(d => {
         return {
           id: d.payload.doc.id,
-          idUser: d.payload.doc.data()['idUsuaio'],
-          nombre: d.payload.doc.data()['nombreUsuario'],
-          apellidopUsuario: d.payload.doc.data()['apellidopUsuario'],
-          apellidomUsuario: d.payload.doc.data()['apellidomUsuario'],
-          diagnostico: d.payload.doc.data()['datosConsulta']['diagnostic'],
-          hourDate: d.payload.doc.data()['hourDate'],
-          datetime: d.payload.doc.data()['datetime'],
-          receta: d.payload.doc.data()['recipe'],
-          medicines: d.payload.doc.data()['datosConsulta']['medicines'],
+          idUser: d.payload.doc.data()['uid'],
+          status: d.payload.doc.data()['estado'],
+          data: d.payload.doc.data()['newConsulta'],
         }
       })
+      this.consultas = this._consultas.filter(x => x.status == 'finalizado');
       console.log('this.consultas:', this.consultas);
     })
   }

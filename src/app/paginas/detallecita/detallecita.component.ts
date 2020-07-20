@@ -66,24 +66,25 @@ export class DetallecitaComponent implements OnInit {
   fechaNac;
   recipepdf: any;
   recipe: any;
-  diagnostics: any;
+  diagnostics: any = "";
   farmacos: any;
   dialogValue: any;
-  diagnostico: any;
+  diagnostico: any = "";
   active: any;
   farmacoSelect: any;
-  farmaco: string;
-  farmacoMarca: string;
+  farmaco: string = "";
+  farmacoMarca: string = "";
   farmacoConcentration;
   public medicinas: any = [];
-  public duration;
-  public frecuencia;
+  public duration = "";
+  public frecuencia = "";
   public total = "";
   public anotations = "";
-  public activeprinciple;
-  public marc;
-  public dosis;
+  public activeprinciple = "";
+  public marc = "";
+  public dosis = "";
   visible: boolean = false;
+  public dataEnviada: any;
 
   constructor(public cs: ConsultasService,
     public router: Router,
@@ -112,27 +113,28 @@ export class DetallecitaComponent implements OnInit {
   get sex() { return this.consultaForm.get('sex'); }
 
   ngOnInit() {
-
-    /* this.initiVideo(); */
-    /*  this.route.queryParams.subscribe(params =>{
-       this.paciente = params['data'];
-       console.log('this.paciente:', this.paciente);
-     }) */
-
-
     let datosPaciente = this.route.snapshot.paramMap.get('data');
     this.dataPaciente = JSON.parse(datosPaciente);
     console.log('dataPaciente:', this.dataPaciente);
 
+
+
     if (datosPaciente) {
       this.getDataPaciente();
-      /* this.initiVideo(); */
       this.getPermissionVideo();
+      this.saveInitAppointment();
     }
     this.crhono();
   }
 
+  saveInitAppointment() {
+    const appointmentId = this.dataPaciente.appointmentId;
+    const uid = this.dataPaciente.patientId;
+    const uidDoctor = this.dataPaciente.professionalId;
 
+    this.cs.saveInitAppointment(appointmentId, uid, uidDoctor);
+
+  }
 
 
   handleSearch(value: string) {
@@ -174,15 +176,15 @@ export class DetallecitaComponent implements OnInit {
 
   createForm() {
     return new FormGroup({
-      motive: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      exploration: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      anamnesis: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      pronostico: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      diagnostic: new FormControl(this.diagnostico, [Validators.required, Validators.minLength(5)]),
-      evolution: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      motive: new FormControl('', [Validators.minLength(5)]),
+      exploration: new FormControl('', [Validators.minLength(5)]),
+      anamnesis: new FormControl('', [Validators.minLength(5)]),
+      pronostico: new FormControl('', [Validators.minLength(5)]),
+      diagnostic: new FormControl(this.diagnostico, [Validators.minLength(5)]),
+      evolution: new FormControl('', [Validators.minLength(5)]),
       more: new FormControl('', [Validators.minLength(5)]),
-      examaux: new FormControl('',),
-      proced: new FormControl('',),
+      examaux: new FormControl(''),
+      proced: new FormControl(''),
       activeprinciple: new FormControl(''),
       marc: new FormControl(''),
       duration: new FormControl(''),
@@ -224,6 +226,7 @@ export class DetallecitaComponent implements OnInit {
   resetReseta() {
     this.consultaForm.value.activeprinciple.reset();
   }
+
   calculoEdad() {
     const fecha = moment().format('YYYY-MM-DD');
     const fecha_nac = moment(this.datosPaciente.fecha_nac).format('YYYY-MM-DD');
@@ -270,10 +273,11 @@ export class DetallecitaComponent implements OnInit {
 
 
   onSaveForm(): void {
+    const dataDoc = JSON.parse(localStorage.getItem('dataDoctor'))
     console.log('this.consultaForm.value:', this.consultaForm.value);
     console.log(this.dataPaciente);
     let datos = this.consultaForm.value;
-    let data = {
+    this.dataEnviada = {
       savein: new Date(),
       nombreUsuario: this.dataPaciente.patientName,
       apellidopUsuario: this.dataPaciente.patientLastname,
@@ -281,33 +285,44 @@ export class DetallecitaComponent implements OnInit {
       idUsuaio: this.dataPaciente.patientId,
       email: this.datosPaciente.email,
       professionalId: this.dataPaciente.professionalId,
+      dataDoctor: [
+        {
+          nombre: dataDoc.displayName,
+          name: dataDoc.name,
+          surname1: dataDoc.surname1,
+          surname2: dataDoc.surname2,
+          cmp: dataDoc.codigoColegiado,
+          id: dataDoc.professionalId,
+        }
+      ],
+      dataPaciente: this.dataPaciente,
       hourDate: this.dataPaciente.time,
       date: this.dataPaciente.datetime,
       provisionDescription: this.dataPaciente.provisionDescription,
-      appointmentlId: this.dataPaciente.appointmentId,
+      appointmentId: this.dataPaciente.appointmentId,
       datetime: this.dataPaciente.datetime,
       now: moment().format('YYYY-MM-DD'),
       edad: this.fechaNac,
       datosConsulta: datos,
-      recipe: this.medicinas,
+      prescription: this.medicinas,
       diagnostico: this.diagnostico
     }
-    if (this.consultaForm.valid) {
-      this.cs.sendConsulta(data);
-      Swal.fire('Data Guardada...', 'Listo... acabas de guardar la consulta!', 'success')
-      console.log('data enviada:', data);
-      this.sendRecipe();
-    }
+
+    const appointmentId = this.dataPaciente.appoinmentId;
+    this.cs.sendConsulta(this.dataEnviada);
+    Swal.fire('Data Guardada...', 'Listo... acabas de guardar datos de la consulta!', 'success')
+    console.log('data enviada:', this.dataEnviada);
+
   }
 
   sendRecipe() {
     const datos = {
       patientId: this.dataPaciente.patientId,
       appointmentId: this.dataPaciente.appointmentId,
-      recipe: this.consultaForm.value
+      recipe: this.dataEnviada
     }
     this.sendMailSrv.SendRecipe(datos).subscribe(data => {
-      console.log('correo enviado:', data);
+      console.log('correo enviado: al finalizar la sesión:', data);
     })
   }
 
@@ -422,15 +437,29 @@ export class DetallecitaComponent implements OnInit {
     }, (err) => {
       console.log("Leave channel failed");
     });
-    /* this.router.navigate(['/home']); */
     this.localStream.close();
   }
 
   closeSession() {
+    this.finallyAppointment();
     this.client.leave();
     this.localStream.close();
+    this.removeTokens();
+    this.sendRecipe();
     this.onReset();
     this.router.navigate(['home']);
+  }
+
+  removeTokens() {
+    let appointmentId = this.dataPaciente.appointmentId;
+    console.log(this.dataPaciente);
+    this.permissionSrv.quitPermissions(appointmentId).subscribe(data => {
+      console.log('tokens eliminados', data);
+    })
+  }
+
+  finallyAppointment() {
+    this.cs.endAppointment();
   }
 
   get medicines() {
@@ -440,13 +469,13 @@ export class DetallecitaComponent implements OnInit {
   addNewMedicine() {
     this.medicinas.push(
       {
-        activeprinciple: this.farmaco,
-        marc: this.farmacoMarca,
-        duration: this.duration,
+        principioActivo: this.farmaco,
+        productoSugerido: this.farmacoMarca,
+        indicacionesTiempo: this.duration,
         frecuencia: this.frecuencia,
-        dosis: this.dosis,
-        total: this.total,
-        anotations: this.anotations,
+        indicacionesDosis: this.dosis,
+        cantidad: this.total,
+        indicacionesNota: this.anotations,
       }
     );
     this.farmaco = "";
@@ -504,31 +533,30 @@ export class DetallecitaComponent implements OnInit {
     return this.consultaForm.get('proced');
   }
 
-  exportAsPDF(recetascroll) {
-    const data = document.getElementById('recetascroll');
-    html2canvas(data).then(canvas => {
-      const contentDataURL = canvas.toDataURL('image/png')
-      let pdf = new jspdf('l', 'cm', 'a4'); //Generates PDF in landscape mode
-      //let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in portrait mode
-      pdf.addImage(contentDataURL, 'PNG', 1, 1, 29.7, 21.0);
-      this.recipepdf = pdf;
-      console.log(this.recipepdf, contentDataURL);
-      pdf.save('recetafinal');
-      /* this.recipepdf = contentDataURL; */
-    });
-  }
+  // exportAsPDF(recetascroll) {
+  //   const data = document.getElementById('recetascroll');
+  //   html2canvas(data).then(canvas => {
+  //     const contentDataURL = canvas.toDataURL('image/png')
+  //     let pdf = new jspdf('l', 'cm', 'a4');
+  //     //let pdf = new jspdf('p', 'cm', 'a4'); //Generates PDF in portrait mode
+  //     pdf.addImage(contentDataURL, 'PNG', 1, 1, 29.7, 21.0);
+  //     this.recipepdf = pdf;
+  //     console.log(this.recipepdf, contentDataURL);
+  //     pdf.save('recetafinal');
+  //   });
+  // }
 
-  subirReceta() {
-    const nameUp = this.dataPaciente.appointmentId.toString();
-    const archivo = this.recipepdf;
-    const ruta = `recipes/${nameUp}`;
-    console.log('ruta:', ruta);
-    const referencia = this.afs.ref(ruta);
-    const tarea = referencia.put(archivo)
-    tarea.then((imagen) => {
-      console.log('imagen', imagen);
-    })
-  }
+  /*   subirReceta() {
+      const nameUp = this.dataPaciente.appointmentId.toString();
+      const archivo = this.recipepdf;
+      const ruta = `recipes/${nameUp}`;
+      console.log('ruta:', ruta);
+      const referencia = this.afs.ref(ruta);
+      const tarea = referencia.put(archivo)
+      tarea.then((imagen) => {
+        console.log('imagen', imagen);
+      })
+    } */
 
   getDiagnostic(diagnos) {
     console.log('diagnos', diagnos);
@@ -536,10 +564,7 @@ export class DetallecitaComponent implements OnInit {
 
   openModalDiagnostic() {
     const dialogRef = this.modal.open(DiagnosticsComponent);
-
     dialogRef.afterClosed().subscribe(result => {
-      /*       console.log('The dialog was closed', result); */
-      /* console.log('el resultado de data:', this.dialogValue.data); */
       this.dialogValue = result.data;
       this.diagnostico = this.dialogValue.data.codigo + " " + '-' + " " + this.dialogValue.data.nombre;
     });

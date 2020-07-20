@@ -9,6 +9,8 @@ import { map } from 'rxjs/operators';
 export class GetPermissionsService {
   private SERVER = API_ENDPOINT;
   private url = `${this.SERVER}ebooking/token-doctor?patientid=`;
+  private urlquit = `${this.SERVER}ebooking/video-rooms?appointmentid=`;
+
 
   constructor(public http: HttpClient) { }
 
@@ -23,6 +25,17 @@ export class GetPermissionsService {
       })/* .catch(e =>{
                 console.log('error desde el servidor:',e);
               }) */
+    )
+  }
+
+  quitPermissions(appointmentId) {
+    const authorization = localStorage.getItem('authorization');
+    let headers = new HttpHeaders({ "Authorization": authorization });
+
+    return this.http.delete(this.urlquit + appointmentId, { headers }).pipe(
+      map((resp: any) => {
+        return resp
+      })
     )
   }
 

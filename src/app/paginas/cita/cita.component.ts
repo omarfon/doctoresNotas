@@ -29,7 +29,7 @@ export class CitaComponent implements OnInit {
   }
 
   getAllConsultasPerDoctor() {
-    this.consultaSrv.getConsultasPerDoctor().subscribe(data => {
+    this.consultaSrv.getConsultasPerDoctor().subscribe((data: any) => {
       this._consultas = data.map(d => {
         return {
           id: d.payload.doc.id,
@@ -39,6 +39,7 @@ export class CitaComponent implements OnInit {
         }
       })
       this.consultas = this._consultas.filter(x => x.status == 'finalizado');
+      /* this.consultas.filter(x => x.data.newConsulta); */
       console.log('this.consultas:', this.consultas);
     })
   }

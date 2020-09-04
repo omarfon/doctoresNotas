@@ -44,6 +44,8 @@ import { RecetaComponent } from './paginas/receta/receta.component';
 import { LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { ErrorconectionComponent } from './modals/errorconection/errorconection.component';
+import { ErrologinComponent } from './modals/errologin/errologin.component';
 registerLocaleData(localeEs, 'es');
 
 
@@ -65,7 +67,9 @@ registerLocaleData(localeEs, 'es');
     ErrorComponent,
     CiesearchComponent,
     DiagnosticsComponent,
-    RecetaComponent
+    RecetaComponent,
+    ErrorconectionComponent,
+    ErrologinComponent
   ],
   imports: [
     BrowserModule,
@@ -89,7 +93,9 @@ registerLocaleData(localeEs, 'es');
     DatepastComponent,
     RecipeComponent,
     ErrorComponent,
-    DiagnosticsComponent
+    DiagnosticsComponent,
+    ErrorconectionComponent,
+    ErrologinComponent
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' },],
   bootstrap: [AppComponent]

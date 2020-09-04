@@ -1,4 +1,4 @@
-import { Component, OnInit, ElementRef, Output, EventEmitter, Input, Optional, Inject } from '@angular/core';
+import { Component, OnInit, ElementRef, Output, EventEmitter, Input, Optional, Inject, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ConsultasService } from 'src/app/services/consultas.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
@@ -23,6 +23,7 @@ import { CieService } from 'src/app/services/cie.service';
 import { DiagnosticsComponent } from 'src/app/modals/diagnostics/diagnostics.component';
 import { FarmacosService } from 'src/app/services/farmacos.service';
 import { SendMailService } from 'src/app/services/send-mail.service';
+import { ErrorconectionComponent } from 'src/app/modals/errorconection/errorconection.component';
 
 
 
@@ -85,6 +86,7 @@ export class DetallecitaComponent implements OnInit {
   public dosis = "";
   visible: boolean = false;
   public dataEnviada: any;
+  public error_conexion;
 
   constructor(public cs: ConsultasService,
     public router: Router,
@@ -103,6 +105,10 @@ export class DetallecitaComponent implements OnInit {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: any) {
     console.log('this.data:', this.data);
     this.consultaForm = this.createForm();
+  }
+
+  ngOnDestroy() {
+    console.log('eliminando página');
   }
 
   get firstName() { return this.consultaForm.get('firstName'); }
@@ -133,7 +139,6 @@ export class DetallecitaComponent implements OnInit {
     const uidDoctor = this.dataPaciente.professionalId;
 
     this.cs.saveInitAppointment(appointmentId, uid, uidDoctor);
-
   }
 
 
@@ -170,9 +175,21 @@ export class DetallecitaComponent implements OnInit {
 
     this.localStream = this.ngxAgoraService.createStream({ streamID: this.uid, audio: true, video: true, screen: false });
     this.assignLocalStreamHandlers();
-    this.initLocalStream(() => this.join(uid => this.publish(), error => console.error(error)));
+    this.initLocalStream(
+      () => this.join(uid => this.publish(), error => {
+        console.error(error);
+        this.error_conexion = error;
+        location.reload();
+        /* this.errorConection(this.error_conexion); */
+      }));
     this.localStream.setVideoProfile('720p_3');
   }
+
+  /* errorConection(err) {
+    this.data = err;
+    this.modal.open(ErrorconectionComponent, err);
+
+  } */
 
   createForm() {
     return new FormGroup({

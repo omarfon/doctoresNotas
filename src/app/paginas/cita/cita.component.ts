@@ -39,7 +39,8 @@ export class CitaComponent implements OnInit {
         }
       })
       this.consultas = this._consultas.filter(x => x.status == 'finalizado');
-      /* this.consultas.filter(x => x.data.newConsulta); */
+      let consultas = this.consultas.filter(x => x.data !== undefined);
+      this.consultas = consultas;
       console.log('this.consultas:', this.consultas);
     })
   }

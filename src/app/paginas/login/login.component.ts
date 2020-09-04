@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ErrorComponent } from 'src/app/alerts/error/error.component';
-
-
+import { ErrologinComponent } from 'src/app/modals/errologin/errologin.component';
 
 
 @Component({
@@ -49,7 +48,9 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['/home']);
       }
     }, err => {
-      this.dialog.open(ErrorComponent)
+      let data = err;
+      console.log('data error:', data);
+      this.dialog.open(ErrologinComponent, { data })
       console.log('err', err);
     });
   }

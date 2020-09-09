@@ -21,11 +21,14 @@ const routes: Routes = [
   { path: 'citas', component: CitaComponent },
   { path: 'citaspendientes', component: CitaspendientesComponent },
   { path: 'receta', component: RecetaComponent },
+  { path: '**', pathMatch: 'full', redirectTo: 'home' }
 
 ];
 
-@NgModule({
+/* @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
-})
-export class AppRoutingModule { }
+}) */
+
+export const APP_ROUTING = RouterModule.forRoot(routes, { useHash: true });
+/* export class AppRoutingModule { } */

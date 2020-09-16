@@ -28,9 +28,7 @@ export class DatesService {
     return this.http.get(this.url + idDoctor, { headers }).pipe(
       map((resp: any) => {
         return resp
-      })/* .catch(e =>{
-                console.log('error desde el servidor:',e);
-              }) */
+      })
     )
   }
 

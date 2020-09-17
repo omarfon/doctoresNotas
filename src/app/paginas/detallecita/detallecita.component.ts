@@ -108,6 +108,7 @@ export class DetallecitaComponent implements OnInit {
   }
 
   ngOnDestroy() {
+    this.closeSession();
     console.log('eliminando página');
   }
 
@@ -340,6 +341,9 @@ export class DetallecitaComponent implements OnInit {
     }
     this.sendMailSrv.SendRecipe(datos).subscribe(data => {
       console.log('correo enviado: al finalizar la sesión:', data);
+    }, err => {
+      Swal.fire('Error en escritura...', 'Por algún motivo la data no puede guardarse... utiliza otro sistema para guardar los datos de esta consulta', 'error')
+      console.log('data enviada:', this.dataEnviada);
     })
   }
 

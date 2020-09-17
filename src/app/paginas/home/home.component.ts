@@ -11,15 +11,15 @@ import { DatesService } from 'src/app/services/dates.service';
 })
 export class HomeComponent implements OnInit {
 
-  private data : any;
+  private data: any;
   name: any;
   public consultas;
   public totalConsultasprevias;
   public citas;
   public citasPendientes;
   constructor(private router: Router,
-              public consultaSrv: ConsultasService,
-              public datesSrv: DatesService) { }
+    public consultaSrv: ConsultasService,
+    public datesSrv: DatesService) { }
 
   ngOnInit() {
     const nombreDoctor = localStorage.getItem('dataDoctor');
@@ -29,34 +29,37 @@ export class HomeComponent implements OnInit {
     this.getDates();
   }
 
-  goToCitasPendientes(){
+  goToCitasPendientes() {
     this.router.navigate(['/citaspendientes']);
   }
 
-  goToCitas(){
+  goToCitas() {
     this.router.navigate(['/citas']);
   }
 
-  getAllConsultas(){
-    this.consultaSrv.getConsultasPerDoctor().subscribe(data =>{
-      this.consultas = data.map( d =>{
+  getAllConsultas() {
+    this.consultaSrv.getConsultasPerDoctor().subscribe(data => {
+      this.consultas = data.map(d => {
         return {
-            id: d.payload.doc.id,
+          id: d.payload.doc.id,
         }
       })
       this.totalConsultasprevias = this.consultas.length;
-      console.log('this.consultas:',this.consultas);
+      console.log('this.consultas:', this.consultas);
     })
   }
 
-  getDates(){
+  getDates() {
     this.datesSrv.getDates().subscribe(data => {
-      this.citas = data
-      console.log('data de dates;', this.citas,data);
-      if(this.citas){
+      const datos = data.filter(x => x.provisionId === 845337);
+      if (datos) {
+        this.citas = datos;
+        console.log('data de dates;', this.citas);
+      }
+      if (this.citas) {
         this.citasPendientes = this.citas.length;
       }
-    }, err =>{
+    }, err => {
       console.log(err);
     });
   }

@@ -18,7 +18,7 @@
         <h3 class="m-l-10">Citas de Hoy</h3>
         <div class="row">
           <div class="col-lg-11 col-md-11" *ngFor="let c of citas">
-            <div class="card btn" *ngIf="c.status == 'pendiente'">
+            <div class="card btn" *ngIf="c.status == 'confirmada'">
               <div class="card-body" (click)="goTodetail(c)">
                 <p class="NombrePaciente">{{c.patientName}} {{c.patientLastname}}</p>
                 <div class="row">

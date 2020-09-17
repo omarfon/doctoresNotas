@@ -28,8 +28,11 @@ export class CitaspendientesComponent implements OnInit {
 
   getDates() {
     this.datesSrv.getDates().subscribe(data => {
-      this.citas = data
-      console.log('data de dates;', this.citas, data);
+      const datos = data.filter(x => x.provisionId === 845337);
+      if (datos) {
+        this.citas = datos;
+        console.log(this.citas);
+      }
     }, err => {
       console.log(err);
     });

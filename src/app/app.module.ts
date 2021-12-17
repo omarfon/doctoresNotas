@@ -43,8 +43,10 @@ import { RecetaComponent } from './paginas/receta/receta.component';
 import { LOCALE_ID } from '@angular/core';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
-registerLocaleData(localeEs, 'es');
 
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+
+registerLocaleData(localeEs, 'es');
 
 
 @NgModule({
@@ -64,7 +66,8 @@ registerLocaleData(localeEs, 'es');
     ErrorComponent,
     CiesearchComponent,
     DiagnosticsComponent,
-    RecetaComponent
+    RecetaComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -81,7 +84,9 @@ registerLocaleData(localeEs, 'es');
     MatBottomSheetModule,
     MatStepperModule,
     MatFormFieldModule,
-    MatSidenavModule
+    MatSidenavModule,
+
+    MatProgressSpinnerModule
   ],
   entryComponents: [
     DatepastComponent,

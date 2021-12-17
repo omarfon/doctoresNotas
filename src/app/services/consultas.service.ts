@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
@@ -59,5 +58,17 @@ export class ConsultasService {
     return this.afs.collection('consultas', ref => ref.where('idUsuaio', '==', 2306)).valueChanges();
 } */
 
+
+getallconsultas(){
+  return this.afs.collection('creacionCitas').valueChanges();
+}
+getdayconsultas(){
+  const appointmentId = localStorage.getItem('data');
+  const datacita = JSON.parse(appointmentId);
+  const fechacita = datacita.appointmentDateTime;
+  return this.afs.collection('creacionCitas', ref => ref.where('appointmentDateTime', '==', fechacita)).valueChanges();
+  
 }
 
+
+}

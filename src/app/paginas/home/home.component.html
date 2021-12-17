@@ -6,7 +6,7 @@
     <div class="container">
       <div class="row page-titles">
         <div class="col-md-5 align-self-center">
-          <h3 class="text-themecolor m-t-20">Bienvenido/a {{name}}</h3>
+          <h3 class="text-dark m-t-20">Bienvenido/a {{name}}</h3>
         </div>
         <div class="col-md-7 align-self-center">
           <ol class="breadcrumb">
@@ -22,17 +22,55 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 m-t-20">
           <div class="row">
-            <div class="col-lg-4">
+            
+            <div class="col-lg-12">
               <div class="card bg-success text-white">
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="stats">
-                      <h1 class="text-white">{{citasPendientes}}</h1>
-                      <h6 class="text-white">Citas de hoy</h6>
-                      <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14"
-                        (click)="goToCitasPendientes()">Revisar</button>
+                      <h6 class="text-white">Total de citas reservadas por web:</h6>
+                      <h1 class="text-dark">{{citastotales}}</h1>
+                   <!--  <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14"
+                        (click)="goToCitasPendientes()">Revisar</button>--> 
                     </div>
                     <div class="stats-icon text-right ml-auto"><i class="icon-people display-5 op-3 text-dark"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4">
+              <div class="card bg-danger text-white">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <div class="stats">
+                      
+                      <h6 class="text-white">Citas reservadas en la web, el dia de hoy : </h6>
+                      <h6 class="text-white">{{diadehoy}}</h6>
+                      <h1 class="text-dark">{{citasHoy}}</h1>
+                     <!--  <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14"
+                        (click)="goToCitasPendientes()">Revisar</button>--> 
+                    </div>
+                    <div class="stats-icon text-right ml-auto"><i class=" display-5 op-3 text-dark"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="card bg-info text-white">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <div class="stats">
+                      
+                      <h6 class="text-white">Citas reservadas en la web, el dia de ayer : </h6>
+                      <h6 class="text-white">{{diadeayer}}</h6>
+                      <h1 class="text-dark">{{citasayer}}</h1>
+                     <!--  <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14"
+                        (click)="goToCitasPendientes()">Revisar</button>--> 
+                    </div>
+                    <div class="stats-icon text-right ml-auto"><i class=" display-5 op-3 text-dark"></i>
                     </div>
                   </div>
                 </div>
@@ -43,8 +81,42 @@
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="stats">
+                      <h6 class="text-white">Citas reservadas en la web, la semanada pasada :</h6>
+                      <h6 class="text-white">Desde: {{septimodia}}</h6>
+                      <h6 class="text-white">Hasta: {{primerdia}}</h6>
+                      <h1 class="text-dark">{{citassemanapasada}}</h1>
+                   <!--  <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14"
+                        (click)="goToCitasPendientes()">Revisar</button>--> 
+                    </div>
+                    <div class="stats-icon text-right ml-auto"><i class=" display-5 op-3 text-dark"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="card bg-success text-white">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <div class="stats">
+                      <label for="start">Ingrese fecha deseada:  </label> <br> 
+                        <input type="date"  (change)="getcitasindicadas($event)" [(ngModel)]="fechaindicada"> <br> 
+                          <h6 class="text-white">La cantidad de citas reservadas en la web, en la fecha {{fechadeseleccion}} son: </h6> 
+                      <h1 class="text-dark"*ngIf="citasindicada">{{citasindicada}}</h1>
+                    </div>
+                    <div class="stats-icon text-right ml-auto"><i class=" icon-eyeglass display-5 op-3 text-dark"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!--  <div class="col-lg-4">
+              <div class="card bg-primary text-white">
+                <div class="card-body">
+                  <div class="d-flex">
+                    <div class="stats">
+                      <h6 class="text-white">Citas Realizadas:</h6>
                       <h1 class="text-white">{{totalConsultasprevias}}</h1>
-                      <h6 class="text-white">Citas Realizadas</h6>
                       <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14"
                         (click)="goToCitas()">Revisar</button>
                     </div>
@@ -59,7 +131,6 @@
                 <div class="card-body">
                   <div class="d-flex">
                     <div class="stats">
-                      <h1 class="text-white">4</h1>
                       <h6 class="text-white">Seguimiento de pacientes</h6>
                       <button class="btn btn-rounded btn-outline btn-light m-t-10 font-14">Revisar</button>
                     </div>
@@ -68,9 +139,10 @@
                   </div>
                 </div>
               </div>
-
             </div>
-            <!--       <div class="col-lg-4">
+
+
+               <div class="col-lg-4">
                                 <div class="card bg-danger text-white">
                                     <div class="card-body">
                                         <div class="d-flex">
@@ -84,7 +156,7 @@
                                     </div>
                                 </div>
                                 
-                            </div> -->
+                </div> -->
           </div>
         </div>
         <div class="col-lg-8"></div>
@@ -92,4 +164,5 @@
       </div>
     </div>
   </div>
+  <mat-spinner *ngIf="!citastotales"></mat-spinner>
 </div>

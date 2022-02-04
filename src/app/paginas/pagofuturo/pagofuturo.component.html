@@ -1,0 +1,41 @@
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="page-wrapper" >
+ <div class="container">
+<h1 style="text-align: center"><b>Reporte de citas por atender pagadas con tarjeta</b></h1>
+<div class="container">
+<h4 class="text-black"><b><i>Reporte mostrado</i></b></h4>
+<h3 class="text-black">Desde el: {{rhoyf}} de {{rmesf}} del {{ryearf}}</h3>
+<h3 class="text-black">Hasta el: {{rdiaf}} de {{frmesf}} del {{fryearf}}</h3>
+</div>
+<table class="table table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nombre del paciente</th>
+      <th scope="col">Fecha de cita</th>
+      <th scope="col">Hora de cita</th>
+      <th scope="col">Especialidad</th>
+      <th scope="col">Doctor</th>
+      <th scope="col">Consultorio</th>
+      <th scope="col">N° de documento</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let cita of citas; let item=index">
+      <th scope="row">{{item+1}}</th>
+      <td>{{cita.PATIENTFULLNAME}}</td>
+      <td>{{cita.FECHA}}</td>
+      <td>{{cita.HORA}}</td>
+      <td>{{cita.BASICSERVICEDESCRIPTION}}</td>
+      <td>{{cita.PROFESSIONALFULLNAME}}</td>
+      <td>{{cita.ROOMNAME}}</td>
+      <td>{{cita.PATIENTDOCUMENTNUMBER}}</td>
+      
+    </tr>
+  </tbody>
+</table>
+  
+  </div>
+</div>
+  

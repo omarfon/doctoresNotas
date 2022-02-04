@@ -46,6 +46,13 @@ import { registerLocaleData } from '@angular/common';
 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
+import { PagopasadoComponent} from './paginas/pagopasado/Pagopasado.component';
+import { PagofuturoComponent } from './paginas/pagofuturo/pagofuturo.component';
+
+
+
+
+
 registerLocaleData(localeEs, 'es');
 
 
@@ -67,6 +74,10 @@ registerLocaleData(localeEs, 'es');
     CiesearchComponent,
     DiagnosticsComponent,
     RecetaComponent,
+    PagopasadoComponent,
+    PagofuturoComponent,
+    
+   
    
   ],
   imports: [

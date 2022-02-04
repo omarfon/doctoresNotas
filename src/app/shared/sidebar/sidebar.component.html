@@ -5,9 +5,12 @@
     <nav class="sidebar-nav">
       <ul id="sidebarnav">
         <li class="nav-divider"></li>
+        <h5 class="text-white">Citas por web</h5>
+        <li><a [routerLink]="['/home']">Cantidad de citas </a></li>
         <ul>
-          <li><a [routerLink]="['/citaspendientes']">Citas de hoy</a></li>
-          <li><a [routerLink]="['/citas']">Citas Completadas</a></li>
+          <h5 class="text-white">Citas pagadas con tarjeta</h5>
+         <li><a [routerLink]="['/pagopasado']">Citas atendidas</a></li>
+          <li><a [routerLink]="['/pagofuturo']">Citas por atender</a></li>
           <!-- <li><a [routerLink]="['/direcciones']">Seguimiento Pacientes</a></li> -->
         </ul>
       </ul>
